@@ -2,21 +2,35 @@
   <div class="login-container">
     <div class="login-form">
       <h1 class="login-header">INICIAR SESION</h1>
-      <LoginForm v-model="form" />
+      <login-form v-model="form" @on-submit="onSubmit" />
+      <the-footer></the-footer>
     </div>
   </div>
 </template>
 
 <script>
-import LoginForm from './components/login.form.vue';
+import LoginForm from '@/views/auth/login.form.vue';
+import useAuth from '@/store/auth';
 
 export default {
-  name: 'LoginComponent',
+  name: 'LoginPage',
   components: { LoginForm },
   setup() {
     const form = reactive({ username: '', password: '' });
+    const auth = useAuth();
+    const router = useRouter();
+    const onSubmit = async (username, password) => {
+      const successLogin = await auth.login(username, password);
+      if (successLogin) {
+        setTimeout(() => router.push('/admin'), 1000);
+      } else {
+        // error login
+        console.log('error login!!!');
+      }
+    };
     return {
       form,
+      onSubmit,
     };
   },
 };

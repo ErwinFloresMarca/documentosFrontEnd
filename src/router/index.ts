@@ -4,12 +4,18 @@ import exceptionRoutes from '@/router/route.exception';
 import asyncRoutes from '@/router/route.async';
 import commonRoutes from '@/router/route.common';
 
+import useAuth from '@/store/auth';
+
 const routes: Array<RouteRecordRaw> = [
-  // 无鉴权的业务路由 ex:登录
+  {
+    path: '/',
+    redirect: '/login',
+  },
+  // rutas estáticas
   ...commonRoutes,
-  // 带鉴权的业务路由
+  // rutas asíncronas
   ...asyncRoutes,
-  // 异常页必须放在路由匹配规则的最后
+  // rutas de excepción
   ...exceptionRoutes,
 ];
 
@@ -25,17 +31,31 @@ const router: Router = createRouter({
  * @param {RouteLocationNormalizedLoaded} from  当前导航正在离开的路由
  * @return {*}
  */
-router.beforeEach((to, from) => {
-  console.log('全局路由前置守卫：to,from\n', to, from);
-  // 设置页面标题
+router.beforeEach((to, from, next) => {
   document.title = (to.meta.title as string) || import.meta.env.VITE_APP_TITLE;
   if (!NProgress.isStarted()) {
     NProgress.start();
   }
+  const auth = useAuth();
+  if (auth.islogged) {
+    if (to.meta.roles) {
+      // logica de roles
+    }
+    if (to.name === 'Login') {
+      next('/admin/home');
+      return;
+    }
+    next();
+    return;
+  }
+  if (to.meta.auth) {
+    next('/login');
+    return;
+  }
+  next();
 });
 
-router.afterEach((to, from) => {
-  console.log('全局路由后置守卫：to,from\n', to, from);
+router.afterEach(() => {
   NProgress.done();
 });
 

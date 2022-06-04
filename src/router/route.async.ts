@@ -3,23 +3,46 @@ import { RouteRecordRaw } from 'vue-router';
 
 const asyncRoutes: Array<RouteRecordRaw> = [
   {
-    path: '/',
-    name: 'home',
+    path: '/admin',
+    name: 'Admin',
+    redirect: '/admin/home',
     meta: {
-      title: '',
+      title: 'Admin',
       icon: '',
     },
-    component: () => import('@/views/home/index.vue'),
+    component: () => import('@/layouts/admin/index.vue'),
+    children: [
+      {
+        path: 'home',
+        name: 'Home',
+        meta: {
+          title: 'Home',
+          icon: '',
+          hidden: false,
+          auth: true,
+        },
+        component: () => import('@/pages/admin/home.page.vue'),
+      },
+    ],
   },
-  {
-    path: '/process',
-    name: 'process',
-    meta: {
-      title: 'Template configuration process',
-      icon: '',
-    },
-    component: () => import('@/views/example/MarkdownPage.vue'),
-  },
+  // {
+  //   path: '/',
+  //   name: 'home',
+  //   meta: {
+  //     title: '',
+  //     icon: '',
+  //   },
+  //   component: () => import('@/views/home/index.vue'),
+  // },
+  // {
+  //   path: '/process',
+  //   name: 'process',
+  //   meta: {
+  //     title: 'Template configuration process',
+  //     icon: '',
+  //   },
+  //   component: () => import('@/views/example/MarkdownPage.vue'),
+  // },
 ];
 
 export default asyncRoutes;

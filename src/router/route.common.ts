@@ -1,6 +1,6 @@
 // 不需要鉴权的业务路由
 import { RouteRecordRaw } from 'vue-router';
-import LoginComponent from '@/views/auth/login.vue';
+import LoginComponent from '@/pages/login.page.vue';
 
 const commonRoutes: Array<RouteRecordRaw> = [
   {

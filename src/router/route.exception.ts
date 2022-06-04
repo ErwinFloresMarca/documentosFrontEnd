@@ -6,7 +6,7 @@ const exceptionRoutes: Array<RouteRecordRaw> = [
     path: '/401',
     name: '401',
     meta: {
-      title: '需要登录',
+      title: 'No Autorizado',
     },
     component: () => import('@/views/exception/401.vue'),
   },
@@ -14,7 +14,7 @@ const exceptionRoutes: Array<RouteRecordRaw> = [
     path: '/404',
     name: '404',
     meta: {
-      title: '非常抱歉,页面走丢了',
+      title: 'No Encontrado',
     },
     component: () => import('@/views/exception/404.vue'),
   },

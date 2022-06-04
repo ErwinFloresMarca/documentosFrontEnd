@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import zhCn from 'element-plus/lib/locale/lang/zh-cn';
+import es from 'element-plus/lib/locale/lang/es';
 
-const locale = zhCn;
+const locale = es;
 </script>
 
 <template>
-  <div class="m-5">
+  <div>
     <el-config-provider :locale="locale">
       <router-view></router-view>
     </el-config-provider>
