@@ -1,7 +1,7 @@
 <template>
   <el-dropdown trigger="click" placement="bottom-end" popper-class="avatar-menu">
     <div class="avatar-container flex flex-wrap justify-end items-center ml-2" @click="native">
-      <div class="text-right">
+      <div class="text-right hidden-xs-only">
         <strong class="text-light-900">{{ fullName }}</strong> <br />
         <strong class="text-opacity-50">{{ getUser.role }}</strong>
       </div>
@@ -20,7 +20,7 @@
   </el-dropdown>
 </template>
 
-<script lang="ts">
+<script>
 import useAuth from '@/store/auth';
 
 export default {
@@ -30,7 +30,9 @@ export default {
     const router = useRouter();
     const { getUser } = auth;
     const fullName = computed({
-      get: () => (getUser ? `${getUser.nombres} ${getUser.paterno} ${getUser.materno}`.toUpperCase() : ''),
+      get: () => {
+        return getUser ? `${getUser.nombres} ${getUser.paterno} ${getUser.materno}`.toUpperCase() : '';
+      },
     });
     const logout = () => {
       auth.logout();
@@ -44,7 +46,8 @@ export default {
   },
 };
 </script>
-<style>
+
+<style lang="scss">
 .avatar-menu {
   .el-popper__arrow {
     left: auto !important;

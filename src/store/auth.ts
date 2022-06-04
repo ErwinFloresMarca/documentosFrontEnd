@@ -17,10 +17,10 @@ interface Auth {
   token?: string;
   isLoggedIn: boolean;
 }
-export const STORE_KEY = 'auth_store';
+export const AUTH_STORE_KEY = 'auth_store';
 const useAuth = defineStore({
   // id de estado
-  id: STORE_KEY,
+  id: AUTH_STORE_KEY,
   state: (): Auth => {
     return {
       user: undefined,

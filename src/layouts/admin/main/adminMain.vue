@@ -1,20 +1,26 @@
 <template>
-  <el-main class="main-container">
+  <el-main>
     <router-view></router-view>
   </el-main>
 </template>
 
 <script>
+import useLayout from '../store/layout';
+
 export default {
   name: 'AdminMain',
   setup() {
-    return {};
+    const { header, footer } = useLayout();
+    return {
+      header,
+      footer,
+    };
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.main-container {
-  height: calc(100vh - 100px);
+.el-main {
+  height: calc(100vh - calc(v-bind('header.height') + v-bind('footer.height')));
 }
 </style>

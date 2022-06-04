@@ -3,7 +3,8 @@ import { storePlugin } from 'pinia-plugin-store';
 import Utf8 from 'crypto-js/enc-utf8';
 import Base64 from 'crypto-js/enc-base64';
 
-import { STORE_KEY } from './auth';
+import { AUTH_STORE_KEY } from './auth';
+import { LAYOUT_STORE_KEY } from '@/layouts/admin/store/layout';
 
 const store = createPinia();
 
@@ -16,7 +17,10 @@ function decrypt(value: string): string {
 }
 
 const plugin = storePlugin({
-  stores: [STORE_KEY],
+  stores: [
+    AUTH_STORE_KEY,
+    // LAYOUT_STORE_KEY,
+  ],
   // use alone storage
   // stores: [{name:'theme_store',storage: localStorage}]
   storage: localStorage, // default storage
