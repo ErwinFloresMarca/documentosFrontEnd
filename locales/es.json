@@ -1,0 +1,15 @@
+{
+  "hello": "Hola",
+  "welcome to": "Bienvenido a",
+  "includes features": "es una configuracion limpia de un template Vue3, esto incluye las siguientes caracteristicas：",
+  "before coding": "Antes de empezar",
+  "setup ide": "Yo recomiendo la configuracion de tu VSCODE",
+  "home": "Principal",
+  "change light": "Click para cambiar a modo claro",
+  "change dark": "Click para cambiar a modo oscuro",
+  "change lang": "Cambiar idioma",
+  "method to using": "Metodo para usar el template",
+  "template process": "Proceso de configuracion del template",
+  "username": "Nombre de usuario",
+  "password": "Cotraseña"
+}
