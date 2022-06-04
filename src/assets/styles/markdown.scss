@@ -9,7 +9,7 @@
   width: 100%;
 }
 
-html:not(.dark) .prose {
+html:not(.dark) body{
   --prism-foreground: #393a34;
   --prism-background: #fbfbfb;
   --prism-background-color: #fbfbfb;
@@ -32,7 +32,7 @@ html:not(.dark) .prose {
   --prism-json-property: #698c96;
 }
 
-html.dark .prose {
+html.dark body{
   --prism-foreground: #d4cfbf;
   --prism-background: #151515;
   --prism-background-color: #151515;

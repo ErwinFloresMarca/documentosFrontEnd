@@ -12,10 +12,10 @@
 </template>
 
 <script>
-import AdminHeader from './adminHeader.vue';
-import AdminMain from './adminMain.vue';
-import AdminAside from './adminAside.vue';
-import AdminFooter from './adminFooter.vue';
+import AdminHeader from './header/adminHeader.vue';
+import AdminMain from './main/adminMain.vue';
+import AdminAside from './menu/adminAside.vue';
+import AdminFooter from './footer/adminFooter.vue';
 
 export default {
   name: 'AdminLayout',

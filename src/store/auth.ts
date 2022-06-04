@@ -9,6 +9,7 @@ interface User {
   materno: string;
   ci: string;
   role: string;
+  avatar?: string;
 }
 
 interface Auth {
@@ -37,13 +38,14 @@ const useAuth = defineStore({
     // actions async tipo de tema
     async login(usuario: string, password: string): Promise<boolean> {
       // process login
+      console.log(usuario, password);
       this.user = {
         id: 1,
         usuario: 'erwin.flores',
         nombres: 'Erwin Ramiro',
         paterno: 'Flores',
         materno: 'Marca',
-        role: 'Amin',
+        role: 'Admin',
         ci: '10529939',
         email: 'ramiromarca6@gmail.com',
       };
@@ -52,11 +54,9 @@ const useAuth = defineStore({
       return true;
     },
     logout() {
-      const router = useRouter();
       this.user = undefined;
       this.token = undefined;
       this.isLoggedIn = false;
-      router.push('/login');
     },
   },
 });
