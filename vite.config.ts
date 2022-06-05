@@ -15,6 +15,7 @@ export default defineConfig((env) => {
     resolve: {
       alias: {
         '@': resolve(__dirname, './src'), // 把 @ 指向到 src 目录去
+        path: 'path-browserify',
       },
     },
     // 服务设置

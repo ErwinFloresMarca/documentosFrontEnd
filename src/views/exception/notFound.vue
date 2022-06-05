@@ -1,9 +1,9 @@
 <template>
   <el-row>
     <el-col>
-      <el-result icon="warning" title="页面未找到" sub-title="请检查路径后重试或返回首页">
+      <el-result icon="warning" title="PAGINA NO ENCONTRADA" sub-title="ESTA PAGINA NO EXISTE">
         <template #extra>
-          <el-button type="primary" @click="goBack">Back</el-button>
+          <el-button type="primary" @click="goBack">Atrás</el-button>
         </template>
       </el-result>
     </el-col>
@@ -14,7 +14,7 @@
 const router = useRouter();
 const goBack = () => {
   router.push({
-    name: 'home',
+    name: 'Home',
   });
 };
 </script>

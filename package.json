@@ -17,6 +17,7 @@
     "crypto-js": "^4.1.1",
     "element-plus": "^2.2.2",
     "nprogress": "^0.2.0",
+    "path-browserify": "^1.0.1",
     "pinia": "^2.0.9",
     "pinia-plugin-store": "^2.0.5",
     "prism-theme-vars": "^0.2.2",

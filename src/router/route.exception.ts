@@ -16,7 +16,7 @@ const exceptionRoutes: Array<RouteRecordRaw> = [
     meta: {
       title: 'No Encontrado',
     },
-    component: () => import('@/views/exception/404.vue'),
+    component: () => import('@/views/exception/notFound.vue'),
   },
   {
     path: '/:pathMatch(.*)',

@@ -22,7 +22,6 @@ declare module 'vue' {
     ElMain: typeof import('element-plus/es')['ElMain']
     ElMenu: typeof import('element-plus/es')['ElMenu']
     ElMenuItem: typeof import('element-plus/es')['ElMenuItem']
-    ElMenuItemGroup: typeof import('element-plus/es')['ElMenuItemGroup']
     ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
     EnProcess: typeof import('./components/EnProcess.md')['default']
