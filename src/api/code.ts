@@ -9,16 +9,16 @@ declare interface codeMessageMapTypes {
 }
 
 const codeMessageMap: codeMessageMapTypes = {
-  400: '[400]:请求参数错误',
-  401: '[401]:账户未登录',
-  403: '[403]:拒绝访问',
-  404: '[404]:请求路径错误',
-  405: '[405]:请求方法错误',
-  500: '[500]:服务器错误',
+  400: '[400]:Parámetro de solicitud incorrecto',
+  401: '[401]:Error de autenticación',
+  403: '[403]:Acceso denegado',
+  404: '[404]:Ruta nop encontrada',
+  405: '[405]:Método de solicitud incorrecto',
+  500: '[500]:Error del Servidor',
 };
 
 const showCodeMessage = (code: number | string): string => {
-  return codeMessageMap[JSON.stringify(code)] || '网络连接异常,请稍后再试!';
+  return codeMessageMap[JSON.stringify(code)] || 'Conexión de red defectuosa, por favor inténtelo mas tarde!';
 };
 
 export default showCodeMessage;

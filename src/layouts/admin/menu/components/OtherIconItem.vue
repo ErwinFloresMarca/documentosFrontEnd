@@ -1,23 +1,31 @@
 <template>
   <el-icon class="el-svg-icon">
-    <component :is="icon" />
+    <component :is="src" />
   </el-icon>
 </template>
 
 <script>
 // import * as PhIcons from '~icons/ph/.*';
+import PhListDashes from '~icons/ph/list-dashes';
 
 export default {
   name: 'OtherIconItem',
   props: {
     icon: {
-      type: String,
-      default: 'list',
+      type: Object,
+      default: PhListDashes,
     },
   },
-  setup() {
+  setup(props) {
+    const src = shallowRef(props.icon);
+    watch(
+      () => props.icon,
+      () => {
+        src.value = props.icon;
+      },
+    );
     return {
-      // PhIcons,
+      src,
     };
   },
 };

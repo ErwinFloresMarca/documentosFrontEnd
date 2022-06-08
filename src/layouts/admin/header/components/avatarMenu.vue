@@ -3,7 +3,7 @@
     <div class="avatar-container flex flex-wrap justify-end items-center ml-2" @click="native">
       <div class="text-right hidden-xs-only">
         <strong class="text-light-900">{{ fullName }}</strong> <br />
-        <strong class="text-opacity-50">{{ getUser.role }}</strong>
+        <strong class="text-opacity-50">{{ getUser.rol }}</strong>
       </div>
       <el-avatar class="ml-2" size="default" :src="getUser.avatar">
         <img src="/images/avatar/circle.png" />

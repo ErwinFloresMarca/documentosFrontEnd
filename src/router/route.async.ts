@@ -2,6 +2,7 @@
 import { RouteRecordRaw } from 'vue-router';
 
 import PhHouseLine from '~icons/ph/house-line';
+import PhUserCircleGear from '~icons/ph/user-circle-gear';
 
 export const adminRoute: RouteRecordRaw = {
   path: '/admin',
@@ -25,6 +26,19 @@ export const adminRoute: RouteRecordRaw = {
         auth: true,
       },
       component: () => import('@/pages/admin/home.page.vue'),
+    },
+    {
+      path: 'usuarios',
+      name: 'Usuarios',
+      meta: {
+        title: 'Usuarios',
+        icon: PhUserCircleGear,
+        // elSvgIcon: '',
+        hidden: false,
+        auth: true,
+        roles: ['admin'],
+      },
+      component: () => import('@/pages/admin/usuarios.page.vue'),
     },
   ],
 };

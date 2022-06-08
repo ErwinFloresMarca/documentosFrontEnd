@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import useAuthApi from '@/api/modules/auth';
 
 interface User {
   id: number;
@@ -8,7 +9,7 @@ interface User {
   paterno?: string;
   materno: string;
   ci: string;
-  role: string;
+  rol: string;
   avatar?: string;
 }
 
@@ -24,6 +25,7 @@ const useAuth = defineStore({
   state: (): Auth => {
     return {
       user: undefined,
+      token: undefined,
       isLoggedIn: false,
     };
   },
@@ -38,20 +40,22 @@ const useAuth = defineStore({
     // actions async tipo de tema
     async login(usuario: string, password: string): Promise<boolean> {
       // process login
+      const authApi = useAuthApi();
       console.log(usuario, password);
-      this.user = {
-        id: 1,
-        usuario: 'erwin.flores',
-        nombres: 'Erwin Ramiro',
-        paterno: 'Flores',
-        materno: 'Marca',
-        role: 'Admin',
-        ci: '10529939',
-        email: 'ramiromarca6@gmail.com',
-      };
-      this.token = 'some token';
-      this.isLoggedIn = true;
-      return true;
+      const isLogin = await authApi
+        .login({ usuario, password })
+        .then((resp) => {
+          console.log('inicio de sesion: ', resp.data);
+          this.user = resp.data.usuario;
+          this.token = resp.data.token;
+          this.isLoggedIn = true;
+          return true;
+        })
+        .catch((err) => {
+          console.log('error de login: ', err);
+          return false;
+        });
+      return isLogin;
     },
     logout() {
       this.user = undefined;
