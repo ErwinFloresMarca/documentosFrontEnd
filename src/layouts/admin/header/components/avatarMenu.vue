@@ -2,8 +2,8 @@
   <el-dropdown trigger="click" placement="bottom-end" popper-class="avatar-menu">
     <div class="avatar-container flex flex-wrap justify-end items-center ml-2" @click="native">
       <div class="text-right hidden-xs-only">
-        <strong class="text-light-900">{{ fullName }}</strong> <br />
-        <strong class="text-opacity-50">{{ getUser.rol }}</strong>
+        <p class="text-light-900 font-bold">{{ fullName }}</p>
+        <p class="text-opacity-50 mt-1 font-bold">{{ getUser.rol.toUpperCase() }}</p>
       </div>
       <el-avatar class="ml-2" size="default" :src="getUser.avatar">
         <img src="/images/avatar/circle.png" />

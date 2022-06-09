@@ -40,9 +40,8 @@ export default function useUsuariosComposable() {
   };
 
   const getById = async (id: number | string) => {
-    const query = getFilterObject();
     const respCreate = await resource
-      .getById(id, { include: query.include, fields: query.fields })
+      .getById(id)
       .then(({ data }) => data)
       .catch(() => false);
     return respCreate;

@@ -35,10 +35,10 @@ const useAxiosInstance = (): AxiosInstance => {
   // interceptor de respuesta
   axiosInstance.interceptors.response.use(
     (response: AxiosResponse) => {
-      if (response.status === 200) {
+      if (response.status < 300) {
         return response;
       }
-      ElMessage.info(JSON.stringify(response.status));
+      if (response.status >= 400) ElMessage.info(JSON.stringify(response.status));
       return response;
     },
     (error: AxiosError) => {
