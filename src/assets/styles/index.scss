@@ -2,3 +2,11 @@
 @import '@/assets/styles/markdown.scss';
 @import '@/assets/styles/dark.scss';
 
+.el-table{
+  td {
+    padding: 1px !important;
+    .cell{
+      padding: 1px;
+    }
+  }
+}

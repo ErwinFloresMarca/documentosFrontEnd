@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import useAuthApi from '@/api/modules/auth';
+import router from '@/router';
 
 interface User {
   id: number;
@@ -41,18 +42,15 @@ const useAuth = defineStore({
     async login(usuario: string, password: string): Promise<boolean> {
       // process login
       const authApi = useAuthApi();
-      console.log(usuario, password);
       const isLogin = await authApi
         .login({ usuario, password })
         .then((resp) => {
-          console.log('inicio de sesion: ', resp.data);
           this.user = resp.data.usuario;
           this.token = resp.data.token;
           this.isLoggedIn = true;
           return true;
         })
         .catch((err) => {
-          console.log('error de login: ', err);
           return false;
         });
       return isLogin;
@@ -61,6 +59,7 @@ const useAuth = defineStore({
       this.user = undefined;
       this.token = undefined;
       this.isLoggedIn = false;
+      router.push('/login');
     },
   },
 });

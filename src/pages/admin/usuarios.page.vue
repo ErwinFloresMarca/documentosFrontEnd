@@ -10,41 +10,187 @@
           <el-button type="primary" size="default" :icon="Plus" @click="onNew">Agregar usuario</el-button>
         </div>
       </template>
-      <el-table v-loading="loading" :data="lista" border stripe fit>
+      <el-table v-loading="loading" :data="lista" border stripe fit @sort-change="onSorter">
         <!-- <el-table-column type="index" width="50" /> -->
-        <el-table-column header-align="center" label="OPCIONES" width="110px" fixed>
-          <template #default>
-            <div class="flex flex-wrap justify-around" style="width: 100%">
-              <el-tooltip effect="dark" content="Editar usuario" placement="bottom">
-                <el-button type="info" size="small" :icon="Edit" plain></el-button>
-              </el-tooltip>
-              <el-tooltip effect="dark" content="Cambiar contraseña" placement="bottom">
-                <el-button class="m-0" type="warning" size="small" :icon="Lock" plain></el-button>
-              </el-tooltip>
-            </div>
+        <el-table-column header-align="center" label="OPCIONES" width="99px" fixed>
+          <template #default="scope">
+            <custom-column-header :scope="scope">
+              <template #header>
+                <el-button type="primary" :icon="RefreshRight" size="small" circle @click="getLista"></el-button>
+              </template>
+              <div class="flex flex-wrap justify-around" style="width: 100%">
+                <el-tooltip effect="dark" content="Editar usuario" placement="bottom">
+                  <el-button type="info" size="small" :icon="Edit" plain @click="onEdit(scope.row)"></el-button>
+                </el-tooltip>
+                <el-tooltip effect="dark" content="Cambiar contraseña" placement="bottom">
+                  <el-button
+                    class="m-0"
+                    type="warning"
+                    size="small"
+                    :icon="Lock"
+                    plain
+                    @click="onChangePassword(scope.row.id)"
+                  ></el-button>
+                </el-tooltip>
+              </div>
+            </custom-column-header>
           </template>
         </el-table-column>
-        <el-table-column header-align="center" prop="ci" label="C.I." min-width="100px" fixed> </el-table-column>
-        <el-table-column header-align="center" prop="nombres" label="NOMBRES" min-width="120px"> </el-table-column>
-        <el-table-column header-align="center" prop="paterno" label="A. PATERNO" min-width="100px"> </el-table-column>
-        <el-table-column header-align="center" prop="materno" label="A. MATERNO" min-width="100px"> </el-table-column>
-        <el-table-column header-align="center" align="center" prop="celular" label="CELULAR" min-width="100px">
-        </el-table-column>
-        <el-table-column header-align="center" align="center" prop="rol" label="ROL" min-width="120px">
-          <template #default="{ row }">
-            {{ row.rol.toUpperCase() }}
+        <el-table-column header-align="center" prop="ci" label="C.I." min-width="100px" fixed sortable="custom">
+          <template #default="scope">
+            <custom-column-header :scope="scope" prop="ci">
+              <template #header>
+                <filter-input v-model="where.ci" operator="like" options="i">
+                  <template #default="props">
+                    <el-input
+                      v-model="props.filter.value"
+                      placeholder="ci"
+                      clearable
+                      @keydown.enter="getLista"
+                    ></el-input>
+                  </template>
+                </filter-input>
+              </template>
+            </custom-column-header>
           </template>
         </el-table-column>
-        <el-table-column header-align="center" align="center" prop="estado" label="ESTADO" min-width="120px">
-          <template #default="{ row }">
-            <el-button
-              :type="row.estado ? 'success' : 'danger'"
-              size="small"
-              round
-              plain
-              @click="onToggleEstado(row.id, row.estado)"
-              >{{ row.estado ? 'HABILITADO' : 'INHABILITADO' }}</el-button
-            >
+        <el-table-column header-align="center" prop="nombres" label="NOMBRES" min-width="120px" sortable="custom">
+          <template #default="scope">
+            <custom-column-header :scope="scope" prop="nombres">
+              <template #header>
+                <filter-input v-model="where.nombres" operator="like" options="i">
+                  <template #default="props">
+                    <el-input
+                      v-model="props.filter.value"
+                      placeholder="Nombres"
+                      clearable
+                      @keydown.enter="getLista"
+                    ></el-input>
+                  </template>
+                </filter-input>
+              </template>
+            </custom-column-header>
+          </template>
+        </el-table-column>
+        <el-table-column header-align="center" prop="paterno" label="A. PATERNO" min-width="100px" sortable="custom">
+          <template #default="scope">
+            <custom-column-header :scope="scope" prop="paterno">
+              <template #header>
+                <filter-input v-model="where.paterno" operator="like" options="i">
+                  <template #default="props">
+                    <el-input
+                      v-model="props.filter.value"
+                      placeholder="Ap. paterno"
+                      clearable
+                      @keydown.enter="getLista"
+                    ></el-input>
+                  </template>
+                </filter-input>
+              </template>
+            </custom-column-header>
+          </template>
+        </el-table-column>
+        <el-table-column header-align="center" prop="materno" label="A. MATERNO" min-width="100px" sortable="custom">
+          <template #default="scope">
+            <custom-column-header :scope="scope" prop="materno">
+              <template #header>
+                <filter-input v-model="where.materno" operator="like" options="i">
+                  <template #default="props">
+                    <el-input
+                      v-model="props.filter.value"
+                      placeholder="Ap. materno"
+                      clearable
+                      @keydown.enter="getLista"
+                    ></el-input>
+                  </template>
+                </filter-input>
+              </template>
+            </custom-column-header>
+          </template>
+        </el-table-column>
+        <el-table-column
+          header-align="center"
+          align="center"
+          prop="celular"
+          label="CELULAR"
+          min-width="100px"
+          sortable="custom"
+        >
+          <template #default="scope">
+            <custom-column-header :scope="scope" prop="celular">
+              <template #header>
+                <filter-input v-model="where.celular" operator="like" options="i">
+                  <template #default="props">
+                    <el-input
+                      v-model="props.filter.value"
+                      placeholder="Celular"
+                      clearable
+                      @keydown.enter="getLista"
+                    ></el-input>
+                  </template>
+                </filter-input>
+              </template>
+            </custom-column-header>
+          </template>
+        </el-table-column>
+        <el-table-column
+          header-align="center"
+          align="center"
+          prop="rol"
+          label="ROL"
+          min-width="120px"
+          sortable="custom"
+        >
+          <template #default="scope">
+            <custom-column-header :scope="scope" prop="paterno">
+              <template #header>
+                <filter-input v-model="where.rol" operator="equals">
+                  <template #default="props">
+                    <select-rol v-model="props.filter.value" @change="getLista" />
+                  </template>
+                </filter-input>
+              </template>
+              <template #default>
+                {{ scope.row.rol ? scope.row.rol.toUpperCase() : '' }}
+              </template>
+            </custom-column-header>
+          </template>
+        </el-table-column>
+        <el-table-column
+          header-align="center"
+          align="center"
+          prop="estado"
+          label="ESTADO"
+          min-width="120px"
+          sortable="custom"
+        >
+          <template #default="scope">
+            <custom-column-header :scope="scope" prop="paterno">
+              <template #header>
+                <filter-input v-model="where.estado" operator="equals">
+                  <template #default="props">
+                    <el-select v-model="props.filter.value" placeholder="estado" clearable @change="getLista">
+                      <el-option label="HABILITADO" :value="true">
+                        <el-tag type="success">HABILITADO</el-tag>
+                      </el-option>
+                      <el-option label="INHABILITADO" :value="false">
+                        <el-tag type="danger">INHABILITADO</el-tag>
+                      </el-option>
+                    </el-select>
+                  </template>
+                </filter-input>
+              </template>
+              <template #default>
+                <el-button
+                  :type="scope.row.estado ? 'success' : 'danger'"
+                  size="small"
+                  round
+                  plain
+                  @click="onToggleEstado(scope.row.id, scope.row.estado)"
+                  >{{ scope.row.estado ? 'HABILITADO' : 'INHABILITADO' }}</el-button
+                >
+              </template>
+            </custom-column-header>
           </template>
         </el-table-column>
       </el-table>
@@ -65,9 +211,10 @@
 </template>
 
 <script lang="ts">
-import { Plus, Edit, Lock } from '@element-plus/icons-vue';
+import { Plus, Edit, Lock, RefreshRight } from '@element-plus/icons-vue';
 import useUsuariosComposable from '@/composables/usuarios.composable';
 import UsuarioForm from '@/views/usuarios/usuario.form.vue';
+import { ComodinObject } from '@/types';
 
 export default {
   name: 'UsuariosPage',
@@ -98,6 +245,7 @@ export default {
             type: 'success',
             duration: 3000,
           });
+          getLista();
         })
         .catch((err) => {
           console.log(err);
@@ -105,9 +253,9 @@ export default {
     };
     // from usuarios
     const showDrawer = ref(false);
-    const selected = ref<object | undefined>(undefined);
+    const selected = ref<ComodinObject | undefined>(undefined);
     const errors = ref<object>({});
-    const formRef = ref<any>(undefined);
+    const formRef = ref<ComodinObject | undefined>(undefined);
     const onNew = () => {
       errors.value = {};
       showDrawer.value = true;
@@ -119,27 +267,88 @@ export default {
     const onSave = (data: { [key: string]: string | undefined }) => {
       if (!selected.value) {
         create({ ...data, passwordConfirm: undefined })
-          .then(() => {
-            ElNotification({
-              title: 'Exito!',
-              message: 'Usuario creado.',
-              type: 'success',
-              duration: 3000,
-            });
-            cleanForm();
-            showDrawer.value = false;
-            getLista();
+          .then((resp) => {
+            if (resp !== false) {
+              ElNotification({
+                title: 'Exito!',
+                message: 'Usuario creado.',
+                type: 'success',
+                duration: 3000,
+              });
+              cleanForm();
+              showDrawer.value = false;
+              getLista();
+            }
+          })
+          .catch((err) => err);
+      } else {
+        const UpData = { ...data };
+        Object.keys(UpData).forEach((k) => {
+          UpData[k] = UpData[k] === null ? undefined : UpData[k];
+        });
+        update(selected.value.id, { ...UpData, passwordConfirm: undefined })
+          .then((resp) => {
+            if (resp !== false) {
+              ElNotification({
+                title: 'Exito!',
+                message: 'Usuario actualizado.',
+                type: 'success',
+                duration: 3000,
+              });
+              cleanForm();
+              showDrawer.value = false;
+              getLista();
+            }
           })
           .catch((err) => err);
       }
     };
+    const onEdit = (usuario: object) => {
+      selected.value = usuario;
+      showDrawer.value = true;
+    };
+    const onChangePassword = (usuarioId: number) => {
+      ElMessageBox.prompt('Introduzca una nueva contraseña:  ', 'Cambiar contraseña', {
+        confirmButtonText: 'Aceptar',
+        cancelButtonText: 'Cancelar',
+        inputType: 'password',
+        inputPattern: /^(?=.*).{8,}$/,
+        inputErrorMessage: 'Contraseña muy corta',
+      })
+        .then(({ value }: { value: string }) => {
+          changePassword(usuarioId, { password: value })
+            .then((resp) => {
+              if (resp !== false) {
+                ElMessage({
+                  type: 'success',
+                  message: `La contraseña se cambio exitosamente.`,
+                  duration: 3000,
+                });
+              }
+            })
+            .catch((err) => err);
+        })
+        .catch(() => {
+          ElMessage({
+            type: 'info',
+            message: 'Cancelado!.',
+          });
+        });
+    };
     const onCancel = () => {
       cleanForm();
+      selected.value = undefined;
       showDrawer.value = false;
     };
+    const onSorter = (val: ComodinObject) => {
+      if (val.prop) onSort(`${val.prop} ${val.order.includes('ascen') ? 'asc' : 'desc'}`);
+      else onSort('');
+    };
     return {
-      lista,
+      onSorter,
+      // table
       loading,
+      lista,
       pagination,
       where,
       include,
@@ -154,6 +363,7 @@ export default {
       Plus,
       Edit,
       Lock,
+      RefreshRight,
       onToggleEstado,
       // from usuarios
       formRef,
@@ -161,6 +371,8 @@ export default {
       errors,
       selected,
       onNew,
+      onEdit,
+      onChangePassword,
       onSave,
       onCancel,
     };

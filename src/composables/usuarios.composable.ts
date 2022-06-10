@@ -6,20 +6,20 @@ export default function useUsuariosComposable() {
   const { pagination, paginate, order, where, fields, include, getFilterObject } = useGetQueryComposable();
   const resource = useUserApi();
   const loading = ref(false);
-  const lista = ref([]);
+  const lista = ref<{ [key: string]: any }>([]);
   const getLista = async () => {
     loading.value = true;
     const query = getFilterObject();
     const respCount = await resource
-      .count(query)
+      .count(query.filter)
       .then(({ data }) => data)
       .catch(() => false);
     pagination.value.total = respCount.count;
-    const respLista = await resource
+    const respLista: Array<object> = await resource
       .list(query)
       .then(({ data }) => data)
       .catch(() => false);
-    lista.value = respLista;
+    lista.value = [{}, ...respLista];
     loading.value = false;
     return respLista;
   };
@@ -71,7 +71,7 @@ export default function useUsuariosComposable() {
 
   const changePassword = async (id: number | string, dataPass: { password: string }) => {
     const respUpdate = await resource
-      .update(id, dataPass)
+      .changePassword(id, dataPass)
       .then(({ data }) => data)
       .catch(() => false);
     return respUpdate;

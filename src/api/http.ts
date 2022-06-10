@@ -45,6 +45,11 @@ const useAxiosInstance = (): AxiosInstance => {
       const { response } = error;
       if (response) {
         ElMessage.error(showCodeMessage(response.status));
+        if (response.status === 401) {
+          // eslint-disable-next-line no-shadow
+          const auth = useAuth();
+          auth.logout();
+        }
         return Promise.reject(response.data);
       }
       ElMessage.warning('Conexión de red defectuosa, Por favor, inténtelo de nuevo más tarde!');

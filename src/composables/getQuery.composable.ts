@@ -1,7 +1,7 @@
 export default function useGetQueryComposable() {
   const pagination = ref({
     page: 1,
-    limit: 3,
+    limit: 5,
     total: 0,
   });
 

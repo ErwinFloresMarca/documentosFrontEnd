@@ -4,6 +4,7 @@
 
 declare module 'vue' {
   export interface GlobalComponents {
+    CustomColumnHeader: typeof import('./components/CustomColumnHeader.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
     ElAvatar: typeof import('element-plus/es')['ElAvatar']
     ElButton: typeof import('element-plus/es')['ElButton']
@@ -33,8 +34,9 @@ declare module 'vue' {
     ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
     ElTable: typeof import('element-plus/es')['ElTable']
     ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
+    ElTag: typeof import('element-plus/es')['ElTag']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
-    EnProcess: typeof import('./components/EnProcess.md')['default']
+    FilterInput: typeof import('./components/FilterInput.vue')['default']
     IAkarIconsGithubFill: typeof import('~icons/akar-icons/github-fill')['default']
     ILaLanguage: typeof import('~icons/la/language')['default']
     IMdiContentDuplicate: typeof import('~icons/mdi/content-duplicate')['default']
@@ -46,8 +48,8 @@ declare module 'vue' {
     IPhTextOutdent: typeof import('~icons/ph/text-outdent')['default']
     IRiArticleLine: typeof import('~icons/ri/article-line')['default']
     Loading: typeof import('element-plus/es')['ElLoadingDirective']
+    SelectRol: typeof import('./components/SelectRol.vue')['default']
     TheFooter: typeof import('./components/TheFooter.vue')['default']
-    ZhProcess: typeof import('./components/ZhProcess.md')['default']
   }
 }
 

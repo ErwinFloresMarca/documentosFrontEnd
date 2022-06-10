@@ -25,6 +25,7 @@
     "effectScope": true,
     "EffectScope": true,
     "ElMessage": true,
+    "ElMessageBox": true,
     "ElNotification": true,
     "extendRef": true,
     "getActivePinia": true,

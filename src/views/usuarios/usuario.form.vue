@@ -10,9 +10,7 @@
           </el-col>
           <el-col :span="8" :offset="0">
             <el-form-item label="Rol" prop="rol">
-              <el-select v-model="data.rol" placeholder="Rol" clearable>
-                <el-option v-for="item in roles" :key="item" :label="item.toUpperCase()" :value="item"> </el-option>
-              </el-select>
+              <select-rol v-model="data.rol" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -51,7 +49,7 @@
       <el-form-item label="Correo electrónico" prop="email">
         <el-input v-model="data.email" />
       </el-form-item>
-      <el-space fill style="width: 100%">
+      <el-space v-if="!selected" fill style="width: 100%">
         <el-row :gutter="20">
           <el-col :span="12" :offset="0">
             <el-form-item label="Contraseña" prop="password">
@@ -106,6 +104,12 @@ export default {
     const data = ref<{
       [key: string]: string;
     }>({});
+    const copySelected = () => {
+      if (props.selected) data.value = { ...props.selected };
+      else data.value = {};
+    };
+    copySelected();
+    watch(() => props.selected, copySelected);
     const defaultRules = {
       usuario: [
         { required: true, message: 'Introduzca un usuario.', trigger: 'blur' },
@@ -156,7 +160,6 @@ export default {
       get: () => props.errors,
       set: (newValue) => emit('update:errors', newValue),
     });
-    const roles = ['admin', 'secretario', 'director', 'tecnico'];
     const onSave = () => {
       if (!formRef.value) return;
       formRef.value.validate((valid: boolean) => {
@@ -167,20 +170,21 @@ export default {
         return false;
       });
     };
-    const onCancel = () => {
-      console.log('on cancel');
-      emit('cancel');
-    };
     const resetValues = () => {
-      data.value = {};
-      if (formRef.value) formRef.value.resetFields();
+      if (formRef.value) {
+        formRef.value.resetFields();
+        setTimeout(() => formRef.value.resetFields(), 500);
+      }
+    };
+    const onCancel = () => {
+      resetValues();
+      emit('cancel');
     };
     return {
       formRef,
       data,
       rules,
       lErrors,
-      roles,
       onSave,
       onCancel,
       resetValues,

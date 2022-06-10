@@ -11,7 +11,7 @@ export default function useResourceComposable(endpoint: string) {
     loading.value = true;
     const query = getFilterObject();
     const respCount = await resource
-      .count(query)
+      .count(query.filter)
       .then(({ data }) => data)
       .catch(() => false);
     pagination.value.total = respCount.count;
