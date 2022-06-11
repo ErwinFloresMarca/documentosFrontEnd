@@ -4,7 +4,7 @@
       <span>
         Copyright © {{ new Date().getFullYear() }} <strong>{{ name }}</strong>
       </span>
-      <span> v {{ version }} </span>
+      <span> Versión: {{ version }} </span>
     </div>
   </el-footer>
 </template>
@@ -33,5 +33,7 @@ export default {
   background-color: v-bind('footer.backgroundColor');
   font-size: 0.8rem;
   padding: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 </style>

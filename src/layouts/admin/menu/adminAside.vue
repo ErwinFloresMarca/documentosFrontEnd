@@ -23,7 +23,13 @@
           <strong class="text-light-50">CARTAS</strong>
         </div>
       </div>
-      <MenuItem :item="adminRoute" is-nest :base-path="adminRoute.path" />
+      <MenuItem
+        v-for="route in adminRoute.children"
+        :key="'/admin/' + route.name"
+        :item="route"
+        is-nest
+        :base-path="'/admin/' + route.path"
+      />
     </el-menu>
   </el-aside>
 </template>

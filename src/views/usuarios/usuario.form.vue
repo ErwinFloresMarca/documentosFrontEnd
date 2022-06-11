@@ -5,7 +5,7 @@
         <el-row :gutter="20">
           <el-col :span="16" :offset="0">
             <el-form-item label="Usuario" prop="usuario">
-              <el-input v-model="data.usuario" />
+              <el-input v-model="data.usuario" placeholder="Usuario" />
             </el-form-item>
           </el-col>
           <el-col :span="8" :offset="0">
@@ -16,7 +16,7 @@
         </el-row>
       </el-space>
       <el-form-item label="Nombres" prop="nombres">
-        <el-input v-model="data.nombres" />
+        <el-input v-model="data.nombres" placeholder="Nombres" />
       </el-form-item>
       <el-space fill style="width: 100%">
         <el-row :gutter="20">
@@ -36,29 +36,29 @@
         <el-row :gutter="20">
           <el-col :span="12" :offset="0">
             <el-form-item label="C.I." prop="ci">
-              <el-input v-model="data.ci" />
+              <el-input v-model="data.ci" placeholder="ci" />
             </el-form-item>
           </el-col>
           <el-col :span="12" :offset="0">
             <el-form-item label="Celular" prop="celular">
-              <el-input v-model="data.celular" />
+              <el-input v-model="data.celular" placeholder="celular" />
             </el-form-item>
           </el-col>
         </el-row>
       </el-space>
       <el-form-item label="Correo electrónico" prop="email">
-        <el-input v-model="data.email" />
+        <el-input v-model="data.email" placeholder="correo electronico" />
       </el-form-item>
       <el-space v-if="!selected" fill style="width: 100%">
         <el-row :gutter="20">
           <el-col :span="12" :offset="0">
             <el-form-item label="Contraseña" prop="password">
-              <el-input v-model="data.password" type="password" show-password />
+              <el-input v-model="data.password" type="password" show-password placeholder="contraseña" />
             </el-form-item>
           </el-col>
           <el-col :span="12" :offset="0">
             <el-form-item label="Repita la contraseña" prop="passwordConfirm">
-              <el-input v-model="data.passwordConfirm" type="password" show-password />
+              <el-input v-model="data.passwordConfirm" type="password" show-password placeholder="contraseña" />
             </el-form-item>
           </el-col>
         </el-row>

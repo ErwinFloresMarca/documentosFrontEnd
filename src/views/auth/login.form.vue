@@ -2,10 +2,16 @@
   <div>
     <el-form ref="form" :model="form" :rules="rules" label-width="0px" :inline="false" size="default">
       <el-form-item>
-        <el-input v-model="form.username" :placeholder="t('username')"></el-input>
+        <el-input v-model="form.username" name="usuario" :placeholder="t('username')"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-input v-model="form.password" type="password" show-password :placeholder="t('password')"></el-input>
+        <el-input
+          v-model="form.password"
+          name="password"
+          type="password"
+          show-password
+          :placeholder="t('password')"
+        ></el-input>
       </el-form-item>
       <el-form-item>
         <!-- TODO: globalizar -->
