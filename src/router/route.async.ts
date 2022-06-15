@@ -3,6 +3,7 @@ import { RouteRecordRaw } from 'vue-router';
 
 import PhHouseLine from '~icons/ph/house-line';
 import PhUserCircleGear from '~icons/ph/user-circle-gear';
+import PhBuildings from '~icons/ph/buildings';
 
 export const adminRoute: RouteRecordRaw = {
   path: '/admin',
@@ -39,6 +40,19 @@ export const adminRoute: RouteRecordRaw = {
         roles: ['admin'],
       },
       component: () => import('@/pages/admin/usuarios.page.vue'),
+    },
+    {
+      path: 'areas',
+      name: 'Areas',
+      meta: {
+        title: 'Areas',
+        icon: PhBuildings,
+        // elSvgIcon: '',
+        hidden: false,
+        auth: true,
+        roles: ['admin'],
+      },
+      component: () => import('@/pages/admin/areas.page.vue'),
     },
   ],
 };

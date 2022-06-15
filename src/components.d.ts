@@ -36,6 +36,7 @@ declare module 'vue' {
     ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
     ElTag: typeof import('element-plus/es')['ElTag']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
+    ElUpload: typeof import('element-plus/es')['ElUpload']
     FilterInput: typeof import('./components/FilterInput.vue')['default']
     IAkarIconsGithubFill: typeof import('~icons/akar-icons/github-fill')['default']
     ILaLanguage: typeof import('~icons/la/language')['default']
@@ -49,6 +50,7 @@ declare module 'vue' {
     IRiArticleLine: typeof import('~icons/ri/article-line')['default']
     Loading: typeof import('element-plus/es')['ElLoadingDirective']
     SelectRol: typeof import('./components/SelectRol.vue')['default']
+    ShowUser: typeof import('./components/ShowUser.vue')['default']
     TheFooter: typeof import('./components/TheFooter.vue')['default']
   }
 }

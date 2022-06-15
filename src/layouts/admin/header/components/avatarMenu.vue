@@ -5,7 +5,7 @@
         <p class="text-light-900 font-bold">{{ fullName }}</p>
         <p class="text-opacity-50 mt-1 font-bold">{{ getUser.rol.toUpperCase() }}</p>
       </div>
-      <el-avatar class="ml-2" size="default" :src="getUser.avatar">
+      <el-avatar class="ml-2" size="default" :src="fileApi.downloadUrl(getUser.avatar)">
         <img src="/images/avatar/circle.png" />
       </el-avatar>
     </div>
@@ -22,10 +22,12 @@
 
 <script>
 import useAuth from '@/store/auth';
+import useFileApi from '@/api/modules/file';
 
 export default {
   name: 'AvatarMenu',
   setup() {
+    const fileApi = useFileApi();
     const auth = useAuth();
     const router = useRouter();
     const { getUser } = auth;
@@ -42,6 +44,7 @@ export default {
       fullName,
       getUser,
       logout,
+      fileApi,
     };
   },
 };

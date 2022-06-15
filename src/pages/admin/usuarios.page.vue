@@ -36,7 +36,7 @@
             </custom-column-header>
           </template>
         </el-table-column>
-        <el-table-column header-align="center" prop="ci" label="C.I." min-width="100px" fixed sortable="custom">
+        <el-table-column header-align="center" prop="ci" label="C.I." min-width="80px" fixed sortable="custom">
           <template #default="scope">
             <custom-column-header :scope="scope" prop="ci">
               <template #header>
@@ -50,6 +50,27 @@
                     ></el-input>
                   </template>
                 </filter-input>
+              </template>
+            </custom-column-header>
+          </template>
+        </el-table-column>
+        <el-table-column header-align="center" prop="usuario" label="USUARIO" min-width="140px" sortable="custom">
+          <template #default="scope">
+            <custom-column-header :scope="scope" prop="usuario">
+              <template #header>
+                <filter-input v-model="where.usuario" operator="like" options="i">
+                  <template #default="props">
+                    <el-input
+                      v-model="props.filter.value"
+                      placeholder="Nombres"
+                      clearable
+                      @keydown.enter="getLista"
+                    ></el-input>
+                  </template>
+                </filter-input>
+              </template>
+              <template #default>
+                <show-user :usuario="scope.row" />
               </template>
             </custom-column-header>
           </template>
@@ -123,7 +144,7 @@
                   <template #default="props">
                     <el-input
                       v-model="props.filter.value"
-                      placeholder="Celular"
+                      placeholder="Usuario"
                       clearable
                       @keydown.enter="getLista"
                     ></el-input>
@@ -215,10 +236,11 @@ import { Plus, Edit, Lock, RefreshRight } from '@element-plus/icons-vue';
 import useUsuariosComposable from '@/composables/usuarios.composable';
 import UsuarioForm from '@/views/usuarios/usuario.form.vue';
 import { ComodinObject } from '@/types';
+import ShowUser from '../../components/ShowUser.vue';
 
 export default {
   name: 'UsuariosPage',
-  components: { UsuarioForm },
+  components: { UsuarioForm, ShowUser },
   setup() {
     const {
       lista,

@@ -1,6 +1,29 @@
 <template>
-  <div class="flex flex-wrap flex-row justify-between" style="height: 100%">
+  <div class="flex flex-col justify-between" style="height: 100%">
     <el-form ref="formRef" :model="data" :rules="rules" label-position="top" label-width="80px" :inline="false">
+      <el-space fill style="width: 100%">
+        <el-row :gutter="20">
+          <el-col :span="10" :offset="0">
+            <el-upload
+              class="avatar-uploader"
+              :action="fileApi.createUrl()"
+              :show-file-list="false"
+              :on-success="handleAvatarSuccess"
+            >
+              <img v-if="data.avatar" :src="fileApi.downloadUrl(data.avatar)" class="avatar" />
+              <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
+            </el-upload>
+          </el-col>
+          <el-col :span="14" :offset="0">
+            <el-form-item label="C.I." prop="ci">
+              <el-input v-model="data.ci" placeholder="ci" />
+            </el-form-item>
+            <el-form-item label="Celular" prop="celular">
+              <el-input v-model="data.celular" placeholder="celular" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-space>
       <el-space fill style="width: 100%">
         <el-row :gutter="20">
           <el-col :span="16" :offset="0">
@@ -28,20 +51,6 @@
           <el-col :span="12" :offset="0">
             <el-form-item label="Apellido materno" prop="materno">
               <el-input v-model="data.materno" placeholder="Apellido Materno" />
-            </el-form-item>
-          </el-col>
-        </el-row>
-      </el-space>
-      <el-space fill style="width: 100%">
-        <el-row :gutter="20">
-          <el-col :span="12" :offset="0">
-            <el-form-item label="C.I." prop="ci">
-              <el-input v-model="data.ci" placeholder="ci" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12" :offset="0">
-            <el-form-item label="Celular" prop="celular">
-              <el-input v-model="data.celular" placeholder="celular" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -77,17 +86,14 @@
   </div>
 </template>
 
-<script lang="ts">
-import { SetupContext } from 'vue';
-import { Close } from '@element-plus/icons-vue';
+<script>
+import { Close, Plus } from '@element-plus/icons-vue';
 import PhFloppyDisk from '~icons/ph/floppy-disk';
+import useFileApi from '@/api/modules/file';
 
-interface Props {
-  selected?: object;
-  errors?: object;
-}
 export default {
   name: 'UsuarioForm',
+  components: { Plus },
   props: {
     errors: {
       type: Object,
@@ -99,11 +105,10 @@ export default {
     },
   },
   emits: ['save', 'cancel', 'update:errors'],
-  setup(props: Props, { emit }: SetupContext) {
-    const formRef = ref<any>(undefined);
-    const data = ref<{
-      [key: string]: string;
-    }>({});
+  setup(props, { emit }) {
+    const fileApi = useFileApi();
+    const formRef = ref(undefined);
+    const data = ref({});
     const copySelected = () => {
       if (props.selected) data.value = { ...props.selected };
       else data.value = {};
@@ -133,7 +138,7 @@ export default {
       ],
       passwordConfirm: [
         {
-          validator: (rule: string, value: string, callback: (error?: Error) => void) => {
+          validator: (rule, value, callback) => {
             if (data.value.password) {
               if (value !== data.value.password) {
                 callback(new Error('No es igual que la contraseña.'));
@@ -146,7 +151,7 @@ export default {
         },
       ],
     };
-    const rules = computed<object>({
+    const rules = computed({
       get: () => {
         const joinRules = {
           ...defaultRules,
@@ -162,7 +167,7 @@ export default {
     });
     const onSave = () => {
       if (!formRef.value) return;
-      formRef.value.validate((valid: boolean) => {
+      formRef.value.validate((valid) => {
         if (valid) {
           emit('save', data.value);
           return true;
@@ -180,6 +185,9 @@ export default {
       resetValues();
       emit('cancel');
     };
+    const handleAvatarSuccess = (resp) => {
+      data.value.avatar = resp.files[0].fileName;
+    };
     return {
       formRef,
       data,
@@ -188,6 +196,8 @@ export default {
       onSave,
       onCancel,
       resetValues,
+      fileApi,
+      handleAvatarSuccess,
       // icons
       Close,
       PhFloppyDisk,
@@ -196,4 +206,33 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+.avatar-uploader .avatar {
+  width: 130px;
+  height: 130px;
+  display: block;
+}
+</style>
+
+<style>
+.avatar-uploader .el-upload {
+  border: 1px dashed var(--el-border-color);
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: var(--el-transition-duration-fast);
+}
+
+.avatar-uploader .el-upload:hover {
+  border-color: var(--el-color-primary);
+}
+
+.el-icon.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 130px;
+  height: 130px;
+  text-align: center;
+}
+</style>
