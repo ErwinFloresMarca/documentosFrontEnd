@@ -1,17 +1,5 @@
 <br>
 
-<p align='center'>
-<a href="https://vitecamp.netlify.app/">Live Demo</a>
-</p>
-
-<br>
-
-<p align='center'>
-<b>English</b> | <a href="https://github.com/nekobc1998923/vitecamp/blob/master/README.zh-CN.md">简体中文</a>
-</p>
-
-<br>
-
 ## Features
 
 - ⚡️ [Vue 3](https://github.com/vuejs/vue-next), [Vite 2](https://github.com/vitejs/vite) - fast !
@@ -80,32 +68,6 @@
   - [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) - Focus on code formatting and beautifying code
   - [EditorConfig for VS Code](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig) - Coding style check
 
-## Try it now!
-
-### GitHub Template
-
-[Create a repo from this template on GitHub](https://github.com/nekobc1998923/vitecamp/generate).
-
-### Clone to local
-
-```bash
-git clone https://github.com/nekobc1998923/vitecamp.git my-vitecamp-app
-cd my-vitecamp-app
-npm i
-```
-
-## Checklist
-
-When you use this template, try follow the checklist to update your info properly
-
-- [ ] Change the author name in `LICENSE`
-- [ ] Change the author name in `package.json`
-- [ ] Change the title in `.env`
-- [ ] Change the favicon in `public`
-- [ ] Clean up the `README` and remove routes
-
-And then , you can enjoy coding fun :)
-
 ## Usage
 
 ### Development
@@ -125,7 +87,3 @@ npm run build
 ```
 
 And you will see the generated file in `dist` that ready to be served.
-
-## Thanks
-
-This template has some features inspired by [Vitesse](https://github.com/antfu/vitesse) ❤
