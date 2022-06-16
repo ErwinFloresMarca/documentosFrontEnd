@@ -9,7 +9,7 @@ export default function useGetQueryComposable() {
   const order = ref<string | Array<string>>('');
   const where = ref<object>({});
   const fields = ref<object>({});
-  const include = ref<Array<object>>([]);
+  const include = ref<Array<object> | undefined>([]);
   const getFilterObject = () => {
     const pagData: { skip?: number; limit?: number } = {};
     if (paginate) {

@@ -1,6 +1,8 @@
 // i18n
 import { createI18n } from 'vue-i18n';
 import messages from '@intlify/vite-plugin-vue-i18n/messages';
+import { DateTime } from 'luxon';
+
 // vue router
 import router from '@/router/index';
 // pinia
@@ -19,6 +21,8 @@ const i18n = createI18n({
 });
 
 const app = createApp(App);
+
+app.config.globalProperties.$luxonDateTime = DateTime;
 
 app.use(router).use(store);
 

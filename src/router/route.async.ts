@@ -50,9 +50,37 @@ export const adminRoute: RouteRecordRaw = {
         // elSvgIcon: '',
         hidden: false,
         auth: true,
-        roles: ['admin'],
+        roles: ['admin', 'secretario', 'director'],
       },
       component: () => import('@/pages/admin/areas.page.vue'),
+    },
+    {
+      path: 'catalogos',
+      name: 'Catalogos',
+      meta: {
+        title: 'Catalogos',
+        icon: PhBuildings,
+        // elSvgIcon: '',
+        hidden: false,
+        auth: true,
+        roles: ['admin', 'secretario', 'director'],
+      },
+      component: () => import('@/pages/admin/catalogos/index.page.vue'),
+      children: [
+        {
+          path: 'tipo-cartas',
+          name: 'TipoCartas',
+          meta: {
+            title: 'Tipo de Cartas',
+            icon: PhBuildings,
+            // elSvgIcon: '',
+            hidden: false,
+            auth: true,
+            roles: ['admin', 'secretario', 'director'],
+          },
+          component: () => import('@/pages/admin/catalogos/tipo-cartas.page.vue'),
+        },
+      ],
     },
   ],
 };

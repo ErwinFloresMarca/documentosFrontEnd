@@ -35,6 +35,10 @@ export default {
             emit('update:modelValue', val === false ? false : val || undefined);
             return;
           }
+          if (val === null) {
+            emit('update:modelValue', undefined);
+            return;
+          }
           const obj = {};
           obj[props.operator] = props.operator === 'like' ? `%${val}%` : val;
           if (props.options) {

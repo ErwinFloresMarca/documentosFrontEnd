@@ -75,7 +75,7 @@ const useService = (): Service => {
     post: (url: string, data?: object) => axiosInstance.post(url, data),
     put: (url: string, data?: object) => axiosInstance.put(url, data),
     patch: (url: string, data?: object) => axiosInstance.patch(url, data),
-    delete: (url: string, data?: object) => axiosInstance.delete(url, data),
+    delete: (url: string) => axiosInstance.delete(url),
     upload: (url: string, file: File) =>
       axiosInstance.post(url, file, {
         headers: { 'Content-Type': 'multipart/form-data' },

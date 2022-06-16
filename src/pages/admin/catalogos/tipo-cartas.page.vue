@@ -1,13 +1,18 @@
 <template>
   <div>
-    <el-drawer v-model="showDrawer" title="AGREGAR AREA" size="30rem" direction="rtl">
-      <area-form ref="formRef" v-model:errors="errors" :selected="selected" @save="onSave" @cancel="onCancel" />
+    <el-drawer
+      v-model="showDrawer"
+      :title="`${selected ? 'EDITAR' : 'AGREGAR'} TIPO DE CARTA`"
+      size="30rem"
+      direction="rtl"
+    >
+      <tipo-carta-form ref="formRef" v-model:errors="errors" :selected="selected" @save="onSave" @cancel="onCancel" />
     </el-drawer>
     <el-card shadow="hover" :body-style="{ padding: '10px' }">
       <template #header>
         <div class="card-header">
-          <span class="font-bold">AREAS</span>
-          <el-button type="primary" size="default" :icon="Plus" @click="onNew">Agregar area</el-button>
+          <span class="font-bold">TIPOS DE CARTAS</span>
+          <el-button type="primary" size="default" :icon="Plus" @click="onNew">Agregar tipo de carta</el-button>
         </div>
       </template>
       <el-table v-loading="loading" :data="lista" border stripe fit @sort-change="onSorter">
@@ -19,10 +24,10 @@
                 <el-button type="primary" :icon="RefreshRight" size="small" circle @click="getLista"></el-button>
               </template>
               <div class="flex flex-wrap justify-around" style="width: 100%">
-                <el-tooltip effect="dark" content="Editar area" placement="bottom">
+                <el-tooltip effect="dark" content="Editar tipo de carta" placement="bottom">
                   <el-button type="warning" size="small" :icon="Edit" plain @click="onEdit(scope.row)"></el-button>
                 </el-tooltip>
-                <el-tooltip effect="dark" content="Eliminar area" placement="bottom">
+                <el-tooltip effect="dark" content="Eliminar tipo de carta" placement="bottom">
                   <el-button
                     class="m-0"
                     type="danger"
@@ -134,12 +139,12 @@
 <script lang="ts">
 import { Plus, Edit, Delete, RefreshRight } from '@element-plus/icons-vue';
 import useResourceComposable from '@/composables/resource.composable';
-import AreaForm from '@/views/areas/area.form.vue';
+import TipoCartaForm from '@/views/tipo-cartas/tipo-carta.form.vue';
 import { ComodinObject } from '@/types';
 
 export default {
-  name: 'AreasPage',
-  components: { AreaForm },
+  name: 'TipoCartasPage',
+  components: { TipoCartaForm },
   setup() {
     const {
       lista,
@@ -156,10 +161,11 @@ export default {
       create,
       update,
       remove,
-    } = useResourceComposable('areas');
+    } = useResourceComposable('tipo-cartas');
+    include.value = undefined;
     emptyFirst.value = true;
     getLista();
-    // from areas
+    // from tipo de cartas
     const showDrawer = ref(false);
     const selected = ref<ComodinObject | undefined>(undefined);
     const errors = ref<object>({});
@@ -180,7 +186,7 @@ export default {
             if (resp !== false) {
               ElNotification({
                 title: 'Exito!',
-                message: 'Area creada.',
+                message: 'Tipo de carta creada.',
                 type: 'success',
                 duration: 3000,
               });
@@ -201,7 +207,7 @@ export default {
             if (resp !== false) {
               ElNotification({
                 title: 'Exito!',
-                message: 'Area actualizada.',
+                message: 'Tipo e carta actualizada.',
                 type: 'success',
                 duration: 3000,
               });
@@ -214,8 +220,8 @@ export default {
           .catch((err) => err);
       }
     };
-    const onEdit = (area: object) => {
-      selected.value = area;
+    const onEdit = (tipoCarta: object) => {
+      selected.value = tipoCarta;
       showDrawer.value = true;
     };
     const onCancel = () => {
@@ -228,7 +234,7 @@ export default {
       else onSort('');
     };
     const onDelete = (id) => {
-      ElMessageBox.confirm('Está seguro de eliminar esta area?', 'Advertencia!', {
+      ElMessageBox.confirm('Está seguro de eliminar esta tipo de carta?', 'Advertencia!', {
         confirmButtonText: 'Aceptar',
         cancelButtonText: 'Cancelar',
         type: 'warning',
@@ -238,7 +244,7 @@ export default {
             .then(() => {
               ElMessage({
                 type: 'success',
-                message: 'Delete completed',
+                message: 'Eliminación completada',
               });
             })
             .catch((err) => err);
@@ -269,7 +275,7 @@ export default {
       Edit,
       Delete,
       RefreshRight,
-      // from areas
+      // from tipo de cartas
       formRef,
       showDrawer,
       errors,
