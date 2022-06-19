@@ -1,8 +1,9 @@
 <template>
   <div>
-    <el-drawer v-model="showDrawer" title="AGREGAR AREA" size="30rem" direction="rtl">
+    <el-drawer v-model="showDrawer" title="AGREGAR AREA" size="30rem" direction="rtl" @close="onCancel">
       <area-form ref="formRef" v-model:errors="errors" :selected="selected" @save="onSave" @cancel="onCancel" />
     </el-drawer>
+    <area-tipo-carta-dialog v-model="showDialog" :area="selected" @close="onCloseDialog" />
     <el-card shadow="hover" :body-style="{ padding: '10px' }">
       <template #header>
         <div class="card-header">
@@ -12,13 +13,22 @@
       </template>
       <el-table v-loading="loading" :data="lista" border stripe fit @sort-change="onSorter">
         <!-- <el-table-column type="index" width="50" /> -->
-        <el-table-column header-align="center" label="OPCIONES" width="99px" fixed>
+        <el-table-column header-align="center" label="OPCIONES" width="150px" fixed>
           <template #default="scope">
             <custom-column-header :scope="scope">
               <template #header>
                 <el-button type="primary" :icon="RefreshRight" size="small" circle @click="getLista"></el-button>
               </template>
               <div class="flex flex-wrap justify-around" style="width: 100%">
+                <el-tooltip effect="dark" content="Asignar tipos de cartas" placement="bottom">
+                  <el-button
+                    type="primary"
+                    size="small"
+                    :icon="DocumentCopy"
+                    plain
+                    @click="onClickTipoCartas(scope.row)"
+                  ></el-button>
+                </el-tooltip>
                 <el-tooltip effect="dark" content="Editar area" placement="bottom">
                   <el-button type="warning" size="small" :icon="Edit" plain @click="onEdit(scope.row)"></el-button>
                 </el-tooltip>
@@ -132,14 +142,16 @@
 </template>
 
 <script lang="ts">
-import { Plus, Edit, Delete, RefreshRight } from '@element-plus/icons-vue';
+import { Plus, Edit, Delete, RefreshRight, DocumentCopy } from '@element-plus/icons-vue';
 import useResourceComposable from '@/composables/resource.composable';
 import AreaForm from '@/views/areas/area.form.vue';
 import { ComodinObject } from '@/types';
+import { Area } from '@/api/types';
+import AreaTipoCartaDialog from '../../views/areas/area-tipo-carta.dialog.vue';
 
 export default {
   name: 'AreasPage',
-  components: { AreaForm },
+  components: { AreaForm, AreaTipoCartaDialog },
   setup() {
     const {
       lista,
@@ -219,15 +231,15 @@ export default {
       showDrawer.value = true;
     };
     const onCancel = () => {
-      cleanForm();
       selected.value = undefined;
       showDrawer.value = false;
+      cleanForm();
     };
     const onSorter = (val: ComodinObject) => {
       if (val.prop) onSort(`${val.prop} ${val.order.includes('ascen') ? 'asc' : 'desc'}`);
       else onSort('');
     };
-    const onDelete = (id) => {
+    const onDelete = (id: number) => {
       ElMessageBox.confirm('Está seguro de eliminar esta area?', 'Advertencia!', {
         confirmButtonText: 'Aceptar',
         cancelButtonText: 'Cancelar',
@@ -250,6 +262,17 @@ export default {
           });
         });
     };
+    // asignar tipos de cartas
+    const showDialog = ref(false);
+    const onCloseDialog = () => {
+      selected.value = undefined;
+      showDialog.value = false;
+    };
+    const onClickTipoCartas = (area: Area) => {
+      selected.value = area;
+      showDialog.value = true;
+    };
+
     return {
       onSorter,
       // table
@@ -279,6 +302,11 @@ export default {
       onEdit,
       onSave,
       onCancel,
+      // asignar Tipos de cartas dialog
+      showDialog,
+      onCloseDialog,
+      onClickTipoCartas,
+      DocumentCopy,
     };
   },
 };

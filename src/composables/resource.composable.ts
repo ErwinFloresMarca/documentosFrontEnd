@@ -22,7 +22,7 @@ export default function useResourceComposable(endpoint: string) {
       .then(({ data }) => data)
       .catch(() => false);
 
-    lista.value = [...(emptyFirst ? [{}] : []), ...respLista];
+    lista.value = [...(emptyFirst.value ? [{}] : []), ...respLista];
     loading.value = false;
     return respLista;
   };

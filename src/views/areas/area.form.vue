@@ -60,7 +60,7 @@ export default {
       else data.value = {};
     };
     copySelected();
-    watch(() => props.selected, copySelected);
+    watch(() => [props.selected], copySelected);
     const defaultRules = {
       nombre: [
         { required: true, message: 'Introduzca un nombre.', trigger: 'blur' },
