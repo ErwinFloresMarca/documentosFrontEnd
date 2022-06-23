@@ -35,6 +35,7 @@ declare module 'vue' {
     ElSelect: typeof import('element-plus/es')['ElSelect']
     ElSpace: typeof import('element-plus/es')['ElSpace']
     ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
+    ElSwitch: typeof import('element-plus/es')['ElSwitch']
     ElTable: typeof import('element-plus/es')['ElTable']
     ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
     ElTag: typeof import('element-plus/es')['ElTag']
@@ -54,6 +55,7 @@ declare module 'vue' {
     IRiArticleLine: typeof import('~icons/ri/article-line')['default']
     Loading: typeof import('element-plus/es')['ElLoadingDirective']
     SelectRol: typeof import('./components/SelectRol.vue')['default']
+    SelectType: typeof import('./components/SelectType.vue')['default']
     ShowUser: typeof import('./components/ShowUser.vue')['default']
     TheFooter: typeof import('./components/TheFooter.vue')['default']
   }

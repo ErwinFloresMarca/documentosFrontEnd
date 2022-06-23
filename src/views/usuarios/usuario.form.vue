@@ -176,9 +176,19 @@ export default {
       });
     };
     const resetValues = () => {
+      data.value = {};
       if (formRef.value) {
-        formRef.value.resetFields();
-        setTimeout(() => formRef.value.resetFields(), 500);
+        formRef.value?.resetFields([
+          'avatar',
+          'ci',
+          'celular',
+          'usuario',
+          'rol',
+          'nombres',
+          'paterno',
+          'materno',
+          'email',
+        ]);
       }
     };
     const onCancel = () => {

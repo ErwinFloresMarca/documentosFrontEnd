@@ -4,6 +4,9 @@ import { RouteRecordRaw } from 'vue-router';
 import PhHouseLine from '~icons/ph/house-line';
 import PhUserCircleGear from '~icons/ph/user-circle-gear';
 import PhBuildings from '~icons/ph/buildings';
+import PhTagChevron from '~icons/ph/tag-chevron';
+import PhFiles from '~icons/ph/files';
+import PhTextbox from '~icons/ph/textbox';
 
 export const adminRoute: RouteRecordRaw = {
   path: '/admin',
@@ -59,7 +62,7 @@ export const adminRoute: RouteRecordRaw = {
       name: 'Catalogos',
       meta: {
         title: 'Catalogos',
-        icon: PhBuildings,
+        icon: PhTagChevron,
         // elSvgIcon: '',
         hidden: false,
         auth: true,
@@ -72,13 +75,26 @@ export const adminRoute: RouteRecordRaw = {
           name: 'TipoCartas',
           meta: {
             title: 'Tipo de Cartas',
-            icon: PhBuildings,
+            icon: PhFiles,
             // elSvgIcon: '',
             hidden: false,
             auth: true,
             roles: ['admin', 'secretario', 'director'],
           },
           component: () => import('@/pages/admin/catalogos/tipo-cartas.page.vue'),
+        },
+        {
+          path: 'campos',
+          name: 'Campos',
+          meta: {
+            title: 'Campos',
+            icon: PhTextbox,
+            // elSvgIcon: '',
+            hidden: false,
+            auth: true,
+            roles: ['admin', 'secretario', 'director'],
+          },
+          component: () => import('@/pages/admin/catalogos/campos.page.vue'),
         },
       ],
     },

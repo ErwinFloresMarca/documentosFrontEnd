@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-drawer v-model="showDrawer" title="AGREGAR USUARIO" size="30rem" direction="rtl">
+    <el-drawer v-model="showDrawer" title="AGREGAR USUARIO" size="30rem" direction="rtl" @close="onCancel">
       <usuario-form ref="formRef" v-model:errors="errors" :selected="selected" @save="onSave" @cancel="onCancel" />
     </el-drawer>
     <el-card shadow="hover" :body-style="{ padding: '10px' }">

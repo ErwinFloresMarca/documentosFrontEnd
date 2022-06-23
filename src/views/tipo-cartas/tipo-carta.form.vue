@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-wrap flex-col justify-between" style="width: 100%; height: 100%">
+  <div class="flex flex-col justify-between" style="width: 100%; height: 100%">
     <el-form
       ref="formRef"
       :model="data"
@@ -87,9 +87,9 @@ export default {
       });
     };
     const resetValues = () => {
+      data.value = {};
       if (formRef.value) {
-        formRef.value.resetFields();
-        setTimeout(() => formRef.value?.resetFields(), 500);
+        formRef.value?.resetFields(['nombre']);
       }
     };
     const onCancel = () => {

@@ -1,18 +1,13 @@
 <template>
   <div>
-    <el-drawer
-      v-model="showDrawer"
-      :title="`${selected ? 'EDITAR' : 'AGREGAR'} TIPO DE CARTA`"
-      size="30rem"
-      direction="rtl"
-    >
-      <tipo-carta-form ref="formRef" v-model:errors="errors" :selected="selected" @save="onSave" @cancel="onCancel" />
+    <el-drawer v-model="showDrawer" :title="`${selected ? 'EDITAR' : 'AGREGAR'} CAMPO`" size="30rem" direction="rtl">
+      <CampoForm ref="formRef" v-model:errors="errors" :selected="selected" @save="onSave" @cancel="onCancel" />
     </el-drawer>
     <el-card shadow="hover" :body-style="{ padding: '10px' }">
       <template #header>
         <div class="card-header">
-          <span class="font-bold">TIPOS DE CARTAS</span>
-          <el-button type="primary" size="default" :icon="Plus" @click="onNew">Agregar tipo de carta</el-button>
+          <span class="font-bold">CAMPOS</span>
+          <el-button type="primary" size="default" :icon="Plus" @click="onNew">Agregar campo</el-button>
         </div>
       </template>
       <el-table v-loading="loading" :data="lista" border stripe fit @sort-change="onSorter">
@@ -61,60 +56,114 @@
         </el-table-column>
         <el-table-column
           header-align="center"
-          align="center"
-          prop="updatedAt"
-          label="Fecha actualización"
-          min-width="120px"
+          prop="label"
+          label="Nombre del campo"
+          min-width="200px"
+          fixed
           sortable="custom"
         >
           <template #default="scope">
-            <custom-column-header :scope="scope" prop="updatedAt">
+            <custom-column-header :scope="scope" prop="label">
               <template #header>
-                <filter-input v-model="where.updatedAt" operator="between">
+                <filter-input v-model="where.label" operator="like" options="i">
                   <template #default="props">
-                    <el-date-picker
+                    <el-input
                       v-model="props.filter.value"
-                      type="daterange"
-                      range-separator="A"
-                      start-placeholder="fecha inicio"
-                      end-placeholder="fecha fin"
-                      @change="getLista"
-                    />
+                      placeholder="nombre de campo"
+                      clearable
+                      @keydown.enter="getLista"
+                    ></el-input>
                   </template>
                 </filter-input>
-              </template>
-              <template #default>
-                {{ $luxonDateTime.fromISO(scope.row.updatedAt).toRelative() }}
               </template>
             </custom-column-header>
           </template>
         </el-table-column>
         <el-table-column
           header-align="center"
-          align="center"
-          prop="createdAt"
-          label="Fecha creación"
-          min-width="120px"
+          prop="dataType"
+          label="Tipo de campo"
+          min-width="200px"
+          fixed
           sortable="custom"
         >
           <template #default="scope">
-            <custom-column-header :scope="scope" prop="createdAt">
+            <custom-column-header :scope="scope" prop="type">
               <template #header>
-                <filter-input v-model="where.createdAt" operator="between">
+                <filter-input v-model="where.type" operator="like" options="i">
                   <template #default="props">
-                    <el-date-picker
+                    <SelectType v-model="props.filter.value" @keydown.enter="getLista" />
+                  </template>
+                </filter-input>
+              </template>
+            </custom-column-header>
+          </template>
+        </el-table-column>
+        <el-table-column
+          header-align="center"
+          prop="conCatalogo"
+          label="Catalogo"
+          min-width="200px"
+          fixed
+          sortable="custom"
+        >
+          <template #default="scope">
+            <custom-column-header :scope="scope" prop="tipoCatalogo">
+              <template #header>
+                <filter-input v-model="where.tipoCatalogo" operator="like" options="i">
+                  <template #default="props">
+                    <el-input
                       v-model="props.filter.value"
-                      type="daterange"
-                      range-separator="A"
-                      start-placeholder="fecha inicio"
-                      end-placeholder="fecha fin"
+                      placeholder="Catalogo"
+                      clearable
+                      @keydown.enter="getLista"
+                    ></el-input>
+                  </template>
+                </filter-input>
+              </template>
+            </custom-column-header>
+          </template>
+        </el-table-column>
+        <el-table-column
+          header-align="center"
+          prop="required"
+          label="Es obligatorio"
+          min-width="200px"
+          fixed
+          sortable="custom"
+        >
+          <template #default="scope">
+            <custom-column-header :scope="scope" prop="required">
+              <template #header>
+                <filter-input v-model="where.required" operator="like" options="i">
+                  <template #default="props">
+                    <el-select
+                      v-model="props.filter.value"
+                      value-key="value"
+                      placeholder="Todos"
+                      clearable
                       @change="getLista"
-                    />
+                    >
+                      <el-option
+                        v-for="item in [
+                          { value: true, label: 'OBLIGATORIO' },
+                          { value: false, label: 'OPCIONAL' },
+                        ]"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value"
+                      >
+                      </el-option>
+                    </el-select>
                   </template>
                 </filter-input>
               </template>
               <template #default>
-                {{ $luxonDateTime.fromISO(scope.row.createdAt).toRelative() }}
+                <div class="text-center">
+                  <el-tag :type="scope.row.required ? 'warning' : 'info'" size="normal" effect="dark">{{
+                    scope.row.required ? 'REQUERIDO' : 'OPCIONAL'
+                  }}</el-tag>
+                </div>
               </template>
             </custom-column-header>
           </template>
@@ -139,12 +188,12 @@
 <script lang="ts">
 import { Plus, Edit, Delete, RefreshRight } from '@element-plus/icons-vue';
 import useResourceComposable from '@/composables/resource.composable';
-import TipoCartaForm from '@/views/tipo-cartas/tipo-carta.form.vue';
 import { ComodinObject } from '@/types';
+import CampoForm from '@/views/campos/campo.form.vue';
 
 export default {
-  name: 'TipoCartasPage',
-  components: { TipoCartaForm },
+  name: 'CamposPage',
+  components: { CampoForm },
   setup() {
     const {
       lista,
@@ -161,7 +210,7 @@ export default {
       create,
       update,
       remove,
-    } = useResourceComposable('tipo-cartas');
+    } = useResourceComposable('campos');
     include.value = undefined;
     emptyFirst.value = true;
     getLista();
