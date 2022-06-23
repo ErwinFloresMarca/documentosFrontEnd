@@ -84,6 +84,7 @@
           prop="dataType"
           label="Tipo de campo"
           min-width="200px"
+          align="center"
           fixed
           sortable="custom"
         >
@@ -130,6 +131,7 @@
           label="Es obligatorio"
           min-width="200px"
           fixed
+          align="center"
           sortable="custom"
         >
           <template #default="scope">
@@ -159,11 +161,9 @@
                 </filter-input>
               </template>
               <template #default>
-                <div class="text-center">
-                  <el-tag :type="scope.row.required ? 'warning' : 'info'" size="normal" effect="dark">{{
-                    scope.row.required ? 'REQUERIDO' : 'OPCIONAL'
-                  }}</el-tag>
-                </div>
+                <el-tag :type="scope.row.required ? 'warning' : 'info'" size="normal" effect="dark">{{
+                  scope.row.required ? 'REQUERIDO' : 'OPCIONAL'
+                }}</el-tag>
               </template>
             </custom-column-header>
           </template>

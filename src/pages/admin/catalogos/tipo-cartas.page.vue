@@ -8,6 +8,7 @@
     >
       <tipo-carta-form ref="formRef" v-model:errors="errors" :selected="selected" @save="onSave" @cancel="onCancel" />
     </el-drawer>
+    <tipo-carta-campo-dialog v-model="showDialog" :tipo-carta="selected" @close="onCloseDialog" />
     <el-card shadow="hover" :body-style="{ padding: '10px' }">
       <template #header>
         <div class="card-header">
@@ -17,13 +18,22 @@
       </template>
       <el-table v-loading="loading" :data="lista" border stripe fit @sort-change="onSorter">
         <!-- <el-table-column type="index" width="50" /> -->
-        <el-table-column header-align="center" label="OPCIONES" width="99px" fixed>
+        <el-table-column header-align="center" label="OPCIONES" width="150px" fixed>
           <template #default="scope">
             <custom-column-header :scope="scope">
               <template #header>
                 <el-button type="primary" :icon="RefreshRight" size="small" circle @click="getLista"></el-button>
               </template>
               <div class="flex flex-wrap justify-around" style="width: 100%">
+                <el-tooltip effect="dark" content="Asignar campos." placement="bottom">
+                  <el-button
+                    type="primary"
+                    size="small"
+                    :icon="PhTextbox"
+                    plain
+                    @click="onClickCampos(scope.row)"
+                  ></el-button>
+                </el-tooltip>
                 <el-tooltip effect="dark" content="Editar tipo de carta" placement="bottom">
                   <el-button type="warning" size="small" :icon="Edit" plain @click="onEdit(scope.row)"></el-button>
                 </el-tooltip>
@@ -141,10 +151,12 @@ import { Plus, Edit, Delete, RefreshRight } from '@element-plus/icons-vue';
 import useResourceComposable from '@/composables/resource.composable';
 import TipoCartaForm from '@/views/tipo-cartas/tipo-carta.form.vue';
 import { ComodinObject } from '@/types';
+import PhTextbox from '~icons/ph/textbox';
+import TipoCartaCampoDialog from '@/views/tipo-cartas/tipo-carta-campo.dialog.vue';
 
 export default {
   name: 'TipoCartasPage',
-  components: { TipoCartaForm },
+  components: { TipoCartaForm, TipoCartaCampoDialog },
   setup() {
     const {
       lista,
@@ -256,6 +268,16 @@ export default {
           });
         });
     };
+    // asignar campos
+    const showDialog = ref(false);
+    const onCloseDialog = () => {
+      selected.value = undefined;
+      showDialog.value = false;
+    };
+    const onClickCampos = (tipoCarta: object) => {
+      selected.value = JSON.parse(JSON.stringify(tipoCarta));
+      showDialog.value = true;
+    };
     return {
       onSorter,
       // table
@@ -285,6 +307,11 @@ export default {
       onEdit,
       onSave,
       onCancel,
+      // Asignar campos
+      showDialog,
+      PhTextbox,
+      onClickCampos,
+      onCloseDialog,
     };
   },
 };
