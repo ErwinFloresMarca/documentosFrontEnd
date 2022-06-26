@@ -16,4 +16,16 @@ export const formatJsonToUrlParams = (data: instanceObject) => {
     : '';
 };
 
+export const unCamelCase = (str: string): string => {
+  return (
+    str
+      // insert a space before all caps
+      .replace(/([A-Z])/g, ' $1')
+      // uppercase the first character
+      .replace(/^./, function (str1: string) {
+        return str1.toUpperCase();
+      })
+  );
+};
+
 export default formatJsonToUrlParams;

@@ -14,7 +14,7 @@
         <span>{{ item.meta.title }}</span>
       </template>
       <MenuItem
-        v-for="child in item.children"
+        v-for="child in showingChildren"
         :key="child.path"
         :is-nest="true"
         :item="child"
@@ -48,18 +48,19 @@ export default {
   },
   setup(props) {
     const onlyOneChild = ref(null);
+    const showingChildren = ref([]);
     const showSidebarItem = (parent, children = []) => {
-      const showingChildren = children.filter((item) => {
-        if (item.hidden) {
+      showingChildren.value = children.filter((item) => {
+        if (item.meta.hidden) {
           return false;
         }
         onlyOneChild.value = item;
         return true;
       });
-      if (showingChildren.length === 1 && !parent?.alwaysShow) {
+      if (showingChildren.value.length === 1 && !parent?.alwaysShow) {
         return true;
       }
-      if (showingChildren.length === 0) {
+      if (showingChildren.value.length === 0) {
         onlyOneChild.value = { ...parent, path: '', noChildren: true };
         return true;
       }
@@ -72,6 +73,7 @@ export default {
       onlyOneChild,
       resolvePath,
       showSidebarItem,
+      showingChildren,
     };
   },
 };

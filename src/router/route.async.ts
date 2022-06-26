@@ -7,6 +7,7 @@ import PhBuildings from '~icons/ph/buildings';
 import PhTagChevron from '~icons/ph/tag-chevron';
 import PhFiles from '~icons/ph/files';
 import PhTextbox from '~icons/ph/textbox';
+import PhListNumbers from '~icons/ph/list-numbers';
 
 export const adminRoute: RouteRecordRaw = {
   path: '/admin',
@@ -95,6 +96,19 @@ export const adminRoute: RouteRecordRaw = {
             roles: ['admin', 'secretario', 'director'],
           },
           component: () => import('@/pages/admin/catalogos/campos.page.vue'),
+        },
+        {
+          path: 'tipo',
+          name: 'TipoCatalogo',
+          meta: {
+            title: 'Tipo de Catalogo',
+            icon: PhListNumbers,
+            hidden: false,
+            // elSvgIcon: '',
+            auth: true,
+            roles: ['admin', 'secretario', 'director'],
+          },
+          component: () => import('@/pages/admin/catalogos/list-catalogos.page.vue'),
         },
       ],
     },

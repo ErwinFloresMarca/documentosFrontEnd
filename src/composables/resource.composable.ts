@@ -74,9 +74,7 @@ export default function useResourceComposable<T>(endpoint: string) {
       .delete(id)
       .then(({ data }) => data)
       .catch(() => false);
-    if (respDelete) {
-      if (refreshList) getLista();
-    }
+    if (refreshList) getLista();
     return respDelete;
   };
 

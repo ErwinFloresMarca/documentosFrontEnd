@@ -32,6 +32,7 @@ const router: Router = createRouter({
  * @return {*}
  */
 router.beforeEach((to, from, next) => {
+  console.log(to, from);
   document.title = (to.meta.title as string) || import.meta.env.VITE_APP_TITLE;
   if (!NProgress.isStarted()) {
     NProgress.start();

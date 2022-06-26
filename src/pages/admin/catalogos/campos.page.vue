@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 <template>
   <div>
     <el-drawer v-model="showDrawer" :title="`${selected ? 'EDITAR' : 'AGREGAR'} CAMPO`" size="30rem" direction="rtl">
@@ -98,7 +99,14 @@
             </custom-column-header>
           </template>
         </el-table-column>
-        <el-table-column header-align="center" prop="conCatalogo" label="Catalogo" min-width="150px" sortable="custom">
+        <el-table-column
+          header-align="center"
+          align="center"
+          prop="conCatalogo"
+          label="Catalogo"
+          min-width="150px"
+          sortable="custom"
+        >
           <template #default="scope">
             <custom-column-header :scope="scope" prop="tipoCatalogo">
               <template #header>
@@ -112,6 +120,17 @@
                     ></el-input>
                   </template>
                 </filter-input>
+              </template>
+              <template #default>
+                <el-button
+                  v-if="scope.row.conCatalogo"
+                  type="primary"
+                  size="small"
+                  plain
+                  @click="$router.push({ name: 'TipoCatalogo', query: { tipo: scope.row.tipoCatalogo } })"
+                  >Catálogos
+                </el-button>
+                <el-tag v-else type="warning" size="default" effect="light">Sin Catalogo</el-tag>
               </template>
             </custom-column-header>
           </template>
@@ -151,7 +170,7 @@
                 </filter-input>
               </template>
               <template #default>
-                <el-tag :type="scope.row.required ? 'warning' : 'info'" size="normal" effect="dark">{{
+                <el-tag :type="scope.row.required ? 'warning' : 'info'" size="default" effect="dark">{{
                   scope.row.required ? 'REQUERIDO' : 'OPCIONAL'
                 }}</el-tag>
               </template>

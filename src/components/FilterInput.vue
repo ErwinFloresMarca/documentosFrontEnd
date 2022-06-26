@@ -15,7 +15,7 @@ export default {
       default: 'like',
     },
     firstValue: {
-      type: [String, Object, Number, Boolean],
+      type: [String, Object, Number, Boolean, Array],
       default: '',
     },
     options: {
@@ -35,7 +35,7 @@ export default {
             emit('update:modelValue', val === false ? false : val || undefined);
             return;
           }
-          if (val === null) {
+          if (val === null || (Array.isArray(val) && val.length === 0)) {
             emit('update:modelValue', undefined);
             return;
           }
