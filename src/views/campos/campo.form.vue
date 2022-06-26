@@ -24,7 +24,7 @@
       <el-form-item label="Identificador" prop="key">
         <el-input v-model="data.key" placeholder="Identificador" />
       </el-form-item>
-      <el-form-item label="Catalogo" prop="conCatalogo">
+      <el-form-item label="Catalogo" prop="tipoCatalogo">
         <el-space fill style="width: 100%">
           <el-row :gutter="20">
             <el-col :span="8" :offset="0">
@@ -104,10 +104,25 @@ export default {
         { required: true, message: 'Introduzca un nombre.', trigger: 'blur' },
         { min: 3, max: 30, message: 'El nombre es muy corto o largo.', trigger: 'blur' },
       ],
+      label: [
+        { required: true, message: 'Introduzca un nombre de campo.', trigger: 'blur' },
+        { min: 3, max: 30, message: 'El nombre del campo es muy corto o largo.', trigger: 'blur' },
+      ],
+      placeholder: [
+        { required: true, message: 'Introduzca una descripción.', trigger: 'blur' },
+        { min: 3, max: 30, message: 'La descripción es muy corto o largo.', trigger: 'blur' },
+      ],
+      type: [{ required: true, message: 'Elija un tipo de campo.', trigger: 'blur' }],
+      key: [{ required: true, message: 'Introduzca un codigo único.', trigger: 'blur' }],
     };
     const rules = computed<object>({
       get: () => {
-        return defaultRules;
+        return data.value.conCatalogo
+          ? {
+              ...defaultRules,
+              tipoCatalogo: [{ required: true, message: 'Introduzca un tipo de catalogo.', trigger: 'blur' }],
+            }
+          : defaultRules;
       },
       set: (newValue) => newValue,
     });
