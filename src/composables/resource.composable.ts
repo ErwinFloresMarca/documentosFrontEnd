@@ -1,15 +1,14 @@
 import useResourceApi from '@/api/resource';
-import { ComodinObject } from '@/types';
 import useGetQueryComposable from './getQuery.composable';
 
 // eslint-disable-next-line import/prefer-default-export
-export default function useResourceComposable(endpoint: string) {
+export default function useResourceComposable<T>(endpoint: string) {
   const { pagination, paginate, order, where, fields, include, getFilterObject } = useGetQueryComposable();
   const resource = useResourceApi(endpoint);
   const loading = ref(false);
-  const lista = ref<ComodinObject>([]);
+  const lista = ref<Array<T>>([]);
   const emptyFirst = ref(false);
-  const getLista = async () => {
+  const getLista = async (): Promise<T[]> => {
     loading.value = true;
     const query = getFilterObject();
     const respCount = await resource
@@ -48,7 +47,7 @@ export default function useResourceComposable(endpoint: string) {
     return respCreate;
   };
 
-  const create = async (newData: any, refreshList = false) => {
+  const create = async (newData: any, refreshList = false): Promise<T> => {
     const respCreate = await resource
       .create(newData)
       .then(({ data }) => data)
@@ -59,7 +58,7 @@ export default function useResourceComposable(endpoint: string) {
     return respCreate;
   };
 
-  const update = async (id: number | string, updateData: any, refreshList = false) => {
+  const update = async (id: number | string, updateData: any, refreshList = false): Promise<T> => {
     const respUpdate = await resource
       .update(id, updateData)
       .then(({ data }) => data)

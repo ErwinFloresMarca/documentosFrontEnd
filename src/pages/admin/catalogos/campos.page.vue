@@ -59,7 +59,6 @@
           prop="label"
           label="Nombre del campo"
           min-width="200px"
-          fixed
           sortable="custom"
         >
           <template #default="scope">
@@ -83,9 +82,8 @@
           header-align="center"
           prop="dataType"
           label="Tipo de campo"
-          min-width="200px"
+          min-width="160px"
           align="center"
-          fixed
           sortable="custom"
         >
           <template #default="scope">
@@ -100,14 +98,7 @@
             </custom-column-header>
           </template>
         </el-table-column>
-        <el-table-column
-          header-align="center"
-          prop="conCatalogo"
-          label="Catalogo"
-          min-width="200px"
-          fixed
-          sortable="custom"
-        >
+        <el-table-column header-align="center" prop="conCatalogo" label="Catalogo" min-width="150px" sortable="custom">
           <template #default="scope">
             <custom-column-header :scope="scope" prop="tipoCatalogo">
               <template #header>
@@ -130,7 +121,6 @@
           prop="required"
           label="Es obligatorio"
           min-width="200px"
-          fixed
           align="center"
           sortable="custom"
         >

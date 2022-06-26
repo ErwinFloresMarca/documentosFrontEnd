@@ -93,7 +93,7 @@
             </custom-column-header>
           </template>
         </el-table-column>
-        <el-table-column header-align="center" prop="paterno" label="A. PATERNO" min-width="100px" sortable="custom">
+        <el-table-column header-align="center" prop="paterno" label="A. PATERNO" min-width="140px" sortable="custom">
           <template #default="scope">
             <custom-column-header :scope="scope" prop="paterno">
               <template #header>
@@ -111,7 +111,7 @@
             </custom-column-header>
           </template>
         </el-table-column>
-        <el-table-column header-align="center" prop="materno" label="A. MATERNO" min-width="100px" sortable="custom">
+        <el-table-column header-align="center" prop="materno" label="A. MATERNO" min-width="140px" sortable="custom">
           <template #default="scope">
             <custom-column-header :scope="scope" prop="materno">
               <template #header>
@@ -134,7 +134,7 @@
           align="center"
           prop="celular"
           label="CELULAR"
-          min-width="100px"
+          min-width="120px"
           sortable="custom"
         >
           <template #default="scope">

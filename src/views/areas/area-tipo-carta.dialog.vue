@@ -1,5 +1,5 @@
 <template>
-  <el-dialog v-model="showDialog" title="ASIGNAR TIPOS DE CARTAS" width="30%" :before-close="onClose">
+  <el-dialog v-model="showDialog" title="ASIGNAR TIPOS DE CARTAS" width="350px" :before-close="onClose">
     <strong>Area: </strong>{{ area?.nombre }}
     <el-divider direction="horizontal" content-position="left">Tipos de Cartas</el-divider>
     <el-tree

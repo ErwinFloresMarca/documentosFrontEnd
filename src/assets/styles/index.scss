@@ -3,6 +3,9 @@
 @import '@/assets/styles/dark.scss';
 
 .el-table{
+  th {
+    text-transform: uppercase;
+  }
   td {
     padding: 1px !important;
     .cell{

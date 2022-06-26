@@ -1,5 +1,5 @@
 <template>
-  <el-dialog v-model="showDialog" title="ASIGNAR CAMPOS" width="30%" :before-close="onClose">
+  <el-dialog v-model="showDialog" title="ASIGNAR CAMPOS" width="350px" :before-close="onClose">
     <strong>Tipo de carta: </strong>{{ tipoCarta?.nombre }}
     <el-divider direction="horizontal" content-position="left">Campos</el-divider>
     <el-tree
@@ -46,8 +46,8 @@ const selectedTC = ref([]);
 const { loading, lista, paginate, getLista } = useResourceComposable('campos');
 paginate.value = false;
 const initComponent = () => {
-  getLista();
   if (props.tipoCarta) {
+    getLista();
     tipoCartasApi
       .getLinks(props.tipoCarta.id, 'campos')
       .then(({ data }) => {

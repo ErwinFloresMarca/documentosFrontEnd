@@ -4,6 +4,12 @@
       <area-form ref="formRef" v-model:errors="errors" :selected="selected" @save="onSave" @cancel="onCancel" />
     </el-drawer>
     <area-tipo-carta-dialog v-model="showDialog" :area="selected" @close="onCloseDialog" />
+    <nuevo-responsable-area-dialog
+      v-model="showDialogResponsable"
+      :area="areaResponsable"
+      @close="onCancelResponsable"
+      @save="onSuccesSaveResponsable"
+    />
     <el-card shadow="hover" :body-style="{ padding: '10px' }">
       <template #header>
         <div class="card-header">
@@ -64,12 +70,49 @@
             </custom-column-header>
           </template>
         </el-table-column>
+        <el-table-column header-align="center" label="responsable" min-width="200px" align="center" sortable="custom">
+          <template #default="scope">
+            <custom-column-header :scope="scope" prop="nombre">
+              <template #default>
+                <div class="flex justify-center">
+                  <show-user :usuario="scope.row.responsables ? scope.row.responsables[0].usuario : undefined">
+                    <template #empty>
+                      <div>
+                        <el-button
+                          type="warning"
+                          :icon="PhUserCirclePlus"
+                          size="default"
+                          plain
+                          @click="onAsignarResponsableArea(scope.row)"
+                          >Asignar Responsable</el-button
+                        >
+                      </div>
+                    </template>
+                    <template #options>
+                      <el-tooltip content="Dar de baja a responsable" placement="top" effect="dark">
+                        <el-button
+                          :loading="loadingResp"
+                          type="danger"
+                          size="default"
+                          :icon="PhUserCircleMinus"
+                          plain
+                          circle
+                          @click="darDeBaja(scope.row.responsables[0].id)"
+                        />
+                      </el-tooltip>
+                    </template>
+                  </show-user>
+                </div>
+              </template>
+            </custom-column-header>
+          </template>
+        </el-table-column>
         <el-table-column
           header-align="center"
           align="center"
           prop="updatedAt"
           label="Fecha actualización"
-          min-width="120px"
+          min-width="210px"
           sortable="custom"
         >
           <template #default="scope">
@@ -99,7 +142,7 @@
           align="center"
           prop="createdAt"
           label="Fecha creación"
-          min-width="120px"
+          min-width="200px"
           sortable="custom"
         >
           <template #default="scope">
@@ -148,10 +191,14 @@ import AreaForm from '@/views/areas/area.form.vue';
 import { ComodinObject } from '@/types';
 import { Area } from '@/api/types';
 import AreaTipoCartaDialog from '../../views/areas/area-tipo-carta.dialog.vue';
+import PhUserCirclePlus from '~icons/ph/user-circle-plus';
+import PhUserCircleMinus from '~icons/ph/user-circle-minus';
+import NuevoResponsableAreaDialog from '@/views/areas/nuevo-responsable-area-dialog.vue';
+import useResourceApi from '@/api/resource';
 
 export default {
   name: 'AreasPage',
-  components: { AreaForm, AreaTipoCartaDialog },
+  components: { AreaForm, AreaTipoCartaDialog, NuevoResponsableAreaDialog },
   setup() {
     const {
       lista,
@@ -169,6 +216,21 @@ export default {
       update,
       remove,
     } = useResourceComposable('areas');
+    include.value = [
+      {
+        relation: 'responsables',
+        scope: {
+          where: {
+            estado: true,
+          },
+          include: [
+            {
+              relation: 'usuario',
+            },
+          ],
+        },
+      },
+    ];
     emptyFirst.value = true;
     getLista();
     // from areas
@@ -272,7 +334,41 @@ export default {
       selected.value = area;
       showDialog.value = true;
     };
-
+    // responsable area
+    const areaResponsable = ref<Area | undefined>(undefined);
+    const showDialogResponsable = ref(false);
+    const onAsignarResponsableArea = (area: Area) => {
+      areaResponsable.value = { ...area };
+      showDialogResponsable.value = true;
+    };
+    const onCancelResponsable = () => {
+      areaResponsable.value = undefined;
+      showDialogResponsable.value = false;
+    };
+    const onSuccesSaveResponsable = () => {
+      areaResponsable.value = undefined;
+      showDialogResponsable.value = false;
+      getLista();
+    };
+    const responsableResource = useResourceApi('responsables');
+    const loadingResp = ref(false);
+    const darDeBaja = (respId: number) => {
+      loadingResp.value = true;
+      responsableResource
+        .update(respId, {
+          estado: false,
+        })
+        .then(() => {
+          loadingResp.value = false;
+          ElMessage({
+            type: 'warning',
+            message: 'Responsable dado de baja',
+            duration: 3000,
+          });
+          getLista();
+        })
+        .catch((err) => err);
+    };
     return {
       onSorter,
       // table
@@ -307,6 +403,16 @@ export default {
       onCloseDialog,
       onClickTipoCartas,
       DocumentCopy,
+      // asignar responsable
+      loadingResp,
+      PhUserCircleMinus,
+      areaResponsable,
+      PhUserCirclePlus,
+      showDialogResponsable,
+      onCancelResponsable,
+      onAsignarResponsableArea,
+      onSuccesSaveResponsable,
+      darDeBaja,
     };
   },
 };

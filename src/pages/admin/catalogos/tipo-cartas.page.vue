@@ -51,7 +51,7 @@
             </custom-column-header>
           </template>
         </el-table-column>
-        <el-table-column header-align="center" prop="nombre" label="Nombre" min-width="200px" fixed sortable="custom">
+        <el-table-column header-align="center" prop="nombre" label="Nombre" min-width="220px" fixed sortable="custom">
           <template #default="scope">
             <custom-column-header :scope="scope" prop="nombre">
               <template #header>
@@ -74,7 +74,7 @@
           align="center"
           prop="updatedAt"
           label="Fecha actualización"
-          min-width="120px"
+          min-width="210px"
           sortable="custom"
         >
           <template #default="scope">
@@ -104,7 +104,7 @@
           align="center"
           prop="createdAt"
           label="Fecha creación"
-          min-width="120px"
+          min-width="200px"
           sortable="custom"
         >
           <template #default="scope">
