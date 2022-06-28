@@ -57,7 +57,7 @@ const remoteMethod = (query, force = false) => {
   if (query || force) {
     where.value = {
       and: [
-        { ...props.defaultWhere },
+        { ...props.defaultWhere, estado: true },
         {
           or: [
             {

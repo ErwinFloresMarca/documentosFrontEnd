@@ -81,7 +81,7 @@
         </el-table-column>
         <el-table-column
           header-align="center"
-          prop="dataType"
+          prop="type"
           label="Tipo de campo"
           min-width="160px"
           align="center"
@@ -95,6 +95,9 @@
                     <SelectType v-model="props.filter.value" @keydown.enter="getLista" />
                   </template>
                 </filter-input>
+              </template>
+              <template #default>
+                {{ getTypeLabel(scope.row.type) }}
               </template>
             </custom-column-header>
           </template>
@@ -146,7 +149,7 @@
           <template #default="scope">
             <custom-column-header :scope="scope" prop="required">
               <template #header>
-                <filter-input v-model="where.required" operator="like" options="i">
+                <filter-input v-model="where.required" operator="equals">
                   <template #default="props">
                     <el-select
                       v-model="props.filter.value"
@@ -199,6 +202,7 @@ import { Plus, Edit, Delete, RefreshRight } from '@element-plus/icons-vue';
 import useResourceComposable from '@/composables/resource.composable';
 import { ComodinObject } from '@/types';
 import CampoForm from '@/views/campos/campo.form.vue';
+import tiposDeCampos from '@/utils/camposType';
 
 export default {
   name: 'CamposPage',
@@ -314,6 +318,9 @@ export default {
           });
         });
     };
+    const getTypeLabel = (key: string) => {
+      return tiposDeCampos?.find((tc: any) => tc.key === key)?.label;
+    };
     return {
       onSorter,
       // table
@@ -333,6 +340,7 @@ export default {
       Edit,
       Delete,
       RefreshRight,
+      getTypeLabel,
       // from tipo de cartas
       formRef,
       showDrawer,

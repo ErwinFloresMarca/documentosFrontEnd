@@ -93,6 +93,7 @@ const showDialog = computed({
   set: (value) => emit('update:visible', value),
 });
 const onSave = () => {
+  if (props.defaultTipo) data.value.tipo = props.defaultTipo;
   if (!formRef.value) return;
   formRef.value.validate((valid: boolean) => {
     if (valid) {

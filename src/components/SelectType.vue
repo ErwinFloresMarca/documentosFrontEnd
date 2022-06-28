@@ -1,10 +1,12 @@
 <template>
   <el-select v-model="compModel" :placeholder="placeholder" clearable @change="$emit('change', $event)">
-    <el-option v-for="item in data" :key="item" :label="item.toUpperCase()" :value="item"> </el-option>
+    <el-option v-for="item in data" :key="item.key" :label="item.label.toUpperCase()" :value="item.key"> </el-option>
   </el-select>
 </template>
 
 <script>
+import tiposDeCampos from '@/utils/camposType';
+
 export default {
   name: 'SelectType',
   props: {
@@ -19,7 +21,7 @@ export default {
   },
   emits: ['update:modelValue', 'change'],
   setup(props, { emit }) {
-    const data = ['string', 'number', 'boolean', 'textarea', 'date', 'datetime'];
+    const data = tiposDeCampos;
     const compModel = computed({
       get: () => props.modelValue,
       set: (val) => emit('update:modelValue', val),
