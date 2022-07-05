@@ -22,5 +22,9 @@ export default {
 <style lang="scss" scoped>
 .el-main {
   height: calc(100vh - calc(v-bind('header.height') + v-bind('footer.height')));
+  background-image: url('/images/logo/logo.png');
+  background-repeat: no-repeat;
+  background-size: auto 100%;
+  background-position: center;
 }
 </style>

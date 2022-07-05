@@ -11,7 +11,7 @@
     >
       <div class="logo-inst">
         <div class="flex flex-width justify-center items-center" style="width: 63px">
-          <el-image>
+          <el-image src="/images/logo/logo.png">
             <template #error>
               <div class="image-slot">
                 <el-icon><icon-picture /></el-icon>
@@ -83,6 +83,7 @@ export default {
   background-color: v-bind('header.backgroundColor');
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-evenly;
 }
 .el-menu-vertical-demo {
   border-color: v-bind('menu.backgroundColor');

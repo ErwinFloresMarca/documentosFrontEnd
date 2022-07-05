@@ -2,20 +2,22 @@
   <div>
     <el-form ref="form" :model="form" :rules="rules" label-width="0px" :inline="false" size="default">
       <el-form-item>
-        <el-input v-model="form.username" name="usuario" :placeholder="t('username')"></el-input>
+        <el-input v-model="form.username" class="input-text" name="usuario" :placeholder="t('username')"></el-input>
       </el-form-item>
       <el-form-item>
         <el-input
           v-model="form.password"
+          class="input-text"
           name="password"
           type="password"
           show-password
           :placeholder="t('password')"
+          @keydown.enter="onSubmit"
         ></el-input>
       </el-form-item>
       <el-form-item>
         <!-- TODO: globalizar -->
-        <el-button type="primary" @click="onSubmit">Iniciar Sesión</el-button>
+        <el-button type="primary" size="large" @click="onSubmit">Iniciar Sesión</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -59,5 +61,9 @@ export default {
 <style lang="scss" scoped>
 .el-button {
   width: 100%;
+}
+.input-text {
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 7px;
 }
 </style>

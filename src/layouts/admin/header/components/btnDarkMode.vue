@@ -25,6 +25,6 @@ export default defineComponent({
 
 <style scoped>
 .el-button {
-  height: 40px;
+  height: 35px;
 }
 </style>

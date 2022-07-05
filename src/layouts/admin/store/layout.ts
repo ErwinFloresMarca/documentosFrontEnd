@@ -5,12 +5,12 @@ const useLayout = defineStore({
     return {
       menu: {
         collapse: false,
-        backgroundColor: '#044D6A',
+        backgroundColor: '#C24B56',
         textColor: '#FFFFFF',
-        activeTextColor: '#E9C245',
+        activeTextColor: '#D19FA1',
       },
       header: {
-        backgroundColor: '#0A2F3AEE',
+        backgroundColor: '#821618',
         height: '70px',
       },
       main: {

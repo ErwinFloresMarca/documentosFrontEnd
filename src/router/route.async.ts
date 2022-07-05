@@ -8,6 +8,7 @@ import PhTagChevron from '~icons/ph/tag-chevron';
 import PhFiles from '~icons/ph/files';
 import PhTextbox from '~icons/ph/textbox';
 import PhListNumbers from '~icons/ph/list-numbers';
+import PhEnvelopeOpen from '~icons/ph/envelope-open';
 
 export const adminRoute: RouteRecordRaw = {
   path: '/admin',
@@ -44,6 +45,53 @@ export const adminRoute: RouteRecordRaw = {
         roles: ['admin'],
       },
       component: () => import('@/pages/admin/usuarios.page.vue'),
+    },
+    {
+      path: 'cartas',
+      name: 'Cartas',
+      redirect: '/admin/cartas/list',
+      meta: {
+        title: 'Cartas',
+        icon: PhEnvelopeOpen,
+        // elSvgIcon: '',
+        hidden: false,
+        auth: true,
+      },
+      component: () => import('@/pages/admin/cartas/index.page.vue'),
+      children: [
+        {
+          path: 'list',
+          name: 'Cartas',
+          meta: {
+            title: 'Cartas',
+            icon: PhEnvelopeOpen,
+            // elSvgIcon: '',
+            hidden: false,
+            auth: true,
+          },
+          component: () => import('@/pages/admin/cartas/cartas.page.vue'),
+        },
+        {
+          path: 'nueva',
+          name: 'NuevaCarta',
+          meta: {
+            title: 'Nueva Carta',
+            hidden: true,
+            auth: true,
+          },
+          component: () => import('@/pages/admin/cartas/nuevo.page.vue'),
+        },
+        {
+          path: 'editar/:id',
+          name: 'EditCarta',
+          meta: {
+            title: 'Editar Carta',
+            hidden: true,
+            auth: true,
+          },
+          component: () => import('@/pages/admin/cartas/edit.page.vue'),
+        },
+      ],
     },
     {
       path: 'areas',
