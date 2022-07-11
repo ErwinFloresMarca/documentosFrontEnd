@@ -1,3 +1,5 @@
+import { ComodinObject } from '@/types';
+
 export default function useGetQueryComposable() {
   const pagination = ref({
     page: 1,
@@ -7,12 +9,12 @@ export default function useGetQueryComposable() {
 
   const paginate = ref(true);
   const order = ref<string | Array<string>>('');
-  const where = ref<any>({});
-  const fields = ref<any>({});
-  const include = ref<Array<any> | undefined>([]);
+  const where = ref<ComodinObject>({});
+  const fields = ref<ComodinObject>({});
+  const include = ref<Array<ComodinObject> | undefined>([]);
   const getFilterObject = () => {
     const pagData: { skip?: number; limit?: number } = {};
-    if (paginate) {
+    if (paginate.value) {
       pagData.skip = (pagination.value.page - 1) * pagination.value.limit;
       pagData.limit = pagination.value.limit;
     }

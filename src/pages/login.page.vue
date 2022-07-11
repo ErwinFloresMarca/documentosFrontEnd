@@ -47,7 +47,8 @@ export default {
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  height: 100vh;
+  min-height: fit-content;
+  height: 100%;
   padding: 35px;
 }
 .login-form {

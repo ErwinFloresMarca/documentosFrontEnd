@@ -1,5 +1,14 @@
 <template>
   <div>
+    <el-dialog
+      v-model="showDialogAssignAreas"
+      title="ASIGNAR AREAS"
+      width="min(600px, 100%)"
+      @close="onCancelAssignAreas"
+    >
+      <asignar-areas :carta-id="cartaId" @save="onCancelAssignAreas" />
+    </el-dialog>
+
     <el-card shadow="hover" :body-style="{ padding: '10px' }">
       <template #header>
         <div class="card-header">
@@ -15,8 +24,14 @@
                 <el-button type="primary" :icon="RefreshRight" size="small" circle @click="getLista"></el-button>
               </template>
               <div class="flex flex-wrap justify-around" style="width: 100%">
-                <el-tooltip effect="dark" content="Editar tipo de carta" placement="bottom">
-                  <el-button type="warning" size="small" :icon="Edit" plain @click="onEdit(scope.row)"></el-button>
+                <el-tooltip effect="dark" content="AsignarAreas" placement="bottom">
+                  <el-button
+                    type="success"
+                    size="small"
+                    :icon="PhBuildings"
+                    plain
+                    @click="onAssignAreas(scope.row.id)"
+                  ></el-button>
                 </el-tooltip>
                 <el-tooltip effect="dark" content="Eliminar tipo de carta" placement="bottom">
                   <el-button
@@ -34,6 +49,7 @@
         </el-table-column>
         <el-table-column
           header-align="center"
+          align="center"
           prop="numDoc"
           label="NÚMERO DOCUMENTO"
           min-width="200px"
@@ -122,10 +138,12 @@
   </div>
 </template>
 <script setup lang="ts">
-import { Plus, Edit, Delete, RefreshRight } from '@element-plus/icons-vue';
+import { Plus, Delete, RefreshRight } from '@element-plus/icons-vue';
 import useResourceComposable from '@/composables/resource.composable';
+import AsignarAreas from '@/views/cartas/asignar-areas.vue';
 import { ComodinObject } from '@/types';
-import { Carta, ICarta } from '@/api/types';
+import { Carta } from '@/api/types';
+import PhBuildings from '~icons/ph/buildings';
 
 const router = useRouter();
 
@@ -142,7 +160,7 @@ const {
   getLista,
   remove,
 } = useResourceComposable<Carta>('cartas');
-include.value = undefined;
+include.value = ['tipoCarta'];
 emptyFirst.value = true;
 getLista();
 // from tipo de cartas
@@ -151,9 +169,9 @@ const onNew = () => {
     name: 'NuevaCarta',
   });
 };
-const onEdit = (tipoCarta: ICarta) => {
-  console.log('on edit carta');
-};
+// const onEdit = (tipoCarta: ICarta) => {
+//   console.log('on edit carta');
+// };
 const onSorter = (val: ComodinObject) => {
   if (val.prop) onSort(`${val.prop} ${val.order.includes('ascen') ? 'asc' : 'desc'}`);
   else onSort('');
@@ -185,6 +203,17 @@ const defaultWhereTipoCartas = computed({
   get: () => ({}),
   set: (value) => value,
 });
+// asignar areas
+const showDialogAssignAreas = ref(false);
+const cartaId = ref<number | undefined>();
+const onAssignAreas = (cId) => {
+  cartaId.value = cId;
+  showDialogAssignAreas.value = true;
+};
+const onCancelAssignAreas = () => {
+  cartaId.value = undefined;
+  showDialogAssignAreas.value = false;
+};
 </script>
 <script lang="ts">
 export default {

@@ -2,15 +2,17 @@
   <el-dialog v-model="showDialog" title="ASIGNAR CAMPOS" width="350px" :before-close="onClose">
     <strong>Tipo de carta: </strong>{{ tipoCarta?.nombre }}
     <el-divider direction="horizontal" content-position="left">Campos</el-divider>
-    <el-tree
-      v-loading="loading"
-      :data="lista"
-      node-key="id"
-      :props="{ label: 'nombre' }"
-      :default-checked-keys="selectedTC"
-      show-checkbox
-      @check="onClickTC"
-    ></el-tree>
+    <el-scrollbar height="200px">
+      <el-tree
+        v-loading="loading"
+        :data="lista"
+        node-key="id"
+        :props="{ label: 'nombre' }"
+        :default-checked-keys="selectedTC"
+        show-checkbox
+        @check="onClickTC"
+      ></el-tree>
+    </el-scrollbar>
     <template #footer>
       <span>
         <el-button @click="onClose">Cerrar</el-button>

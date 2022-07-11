@@ -61,7 +61,7 @@ export const adminRoute: RouteRecordRaw = {
       children: [
         {
           path: 'list',
-          name: 'Cartas',
+          name: 'CartasList',
           meta: {
             title: 'Cartas',
             icon: PhEnvelopeOpen,

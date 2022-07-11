@@ -2,6 +2,13 @@
 @import '@/assets/styles/markdown.scss';
 @import '@/assets/styles/dark.scss';
 
+.custom-date-picker {
+  width: 100% !important;
+  .el-input__wrapper {
+    width: 100% !important;
+  }
+}
+
 .el-table{
   th {
     text-transform: uppercase;

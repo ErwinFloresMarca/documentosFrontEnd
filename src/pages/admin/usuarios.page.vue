@@ -261,6 +261,7 @@ export default {
     const onToggleEstado = (id: number, estado: boolean) => {
       update(id, { estado: !estado })
         .then(() => {
+          // eslint-disable-next-line no-undef
           ElNotification({
             title: 'Exito!',
             message: 'Usuario actualizado.',
@@ -291,6 +292,7 @@ export default {
         create({ ...data, passwordConfirm: undefined })
           .then((resp) => {
             if (resp !== false) {
+              // eslint-disable-next-line no-undef
               ElNotification({
                 title: 'Exito!',
                 message: 'Usuario creado.',
@@ -311,6 +313,7 @@ export default {
         update(selected.value.id, { ...UpData, passwordConfirm: undefined })
           .then((resp) => {
             if (resp !== false) {
+              // eslint-disable-next-line no-undef
               ElNotification({
                 title: 'Exito!',
                 message: 'Usuario actualizado.',

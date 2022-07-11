@@ -201,6 +201,7 @@
 import { Plus, Edit, Delete, RefreshRight } from '@element-plus/icons-vue';
 import useResourceComposable from '@/composables/resource.composable';
 import { ComodinObject } from '@/types';
+import { TipoCarta } from '@/api/types';
 import CampoForm from '@/views/campos/campo.form.vue';
 import tiposDeCampos from '@/utils/camposType';
 
@@ -246,9 +247,10 @@ export default {
         create({ ...data, passwordConfirm: undefined })
           .then((resp) => {
             if (resp !== false) {
+              // eslint-disable-next-line no-undef
               ElNotification({
                 title: 'Exito!',
-                message: 'Tipo de carta creada.',
+                message: 'Campo creado.',
                 type: 'success',
                 duration: 3000,
               });
@@ -267,6 +269,7 @@ export default {
         update(selected.value.id, { ...UpData, passwordConfirm: undefined })
           .then((resp) => {
             if (resp !== false) {
+              // eslint-disable-next-line no-undef
               ElNotification({
                 title: 'Exito!',
                 message: 'Tipo e carta actualizada.',
@@ -319,7 +322,7 @@ export default {
         });
     };
     const getTypeLabel = (key: string) => {
-      return tiposDeCampos?.find((tc: any) => tc.key === key)?.label;
+      return tiposDeCampos?.find((tc: TipoCarta) => tc.key === key)?.label;
     };
     return {
       onSorter,

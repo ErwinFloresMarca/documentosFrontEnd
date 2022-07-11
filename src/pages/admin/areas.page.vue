@@ -252,6 +252,7 @@ export default {
         create({ ...data, passwordConfirm: undefined })
           .then((resp) => {
             if (resp !== false) {
+              // eslint-disable-next-line no-undef
               ElNotification({
                 title: 'Exito!',
                 message: 'Area creada.',
@@ -273,6 +274,7 @@ export default {
         update(selected.value.id, { ...UpData, passwordConfirm: undefined })
           .then((resp) => {
             if (resp !== false) {
+              // eslint-disable-next-line no-undef
               ElNotification({
                 title: 'Exito!',
                 message: 'Area actualizada.',
