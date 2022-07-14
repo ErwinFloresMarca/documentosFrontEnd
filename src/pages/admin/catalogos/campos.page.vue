@@ -20,10 +20,10 @@
                 <el-button type="primary" :icon="RefreshRight" size="small" circle @click="getLista"></el-button>
               </template>
               <div class="flex flex-wrap justify-around" style="width: 100%">
-                <el-tooltip effect="dark" content="Editar tipo de carta" placement="bottom">
+                <el-tooltip effect="dark" content="Editar tipo de documento" placement="bottom">
                   <el-button type="warning" size="small" :icon="Edit" plain @click="onEdit(scope.row)"></el-button>
                 </el-tooltip>
-                <el-tooltip effect="dark" content="Eliminar tipo de carta" placement="bottom">
+                <el-tooltip effect="dark" content="Eliminar tipo de documento" placement="bottom">
                   <el-button
                     class="m-0"
                     type="danger"
@@ -201,7 +201,7 @@
 import { Plus, Edit, Delete, RefreshRight } from '@element-plus/icons-vue';
 import useResourceComposable from '@/composables/resource.composable';
 import { ComodinObject } from '@/types';
-import { TipoCarta } from '@/api/types';
+import { TipoDocumento } from '@/api/types';
 import CampoForm from '@/views/campos/campo.form.vue';
 import tiposDeCampos from '@/utils/camposType';
 
@@ -228,7 +228,7 @@ export default {
     include.value = undefined;
     emptyFirst.value = true;
     getLista();
-    // from tipo de cartas
+    // from tipo de documentos
     const showDrawer = ref(false);
     const selected = ref<ComodinObject | undefined>(undefined);
     const errors = ref<object>({});
@@ -272,7 +272,7 @@ export default {
               // eslint-disable-next-line no-undef
               ElNotification({
                 title: 'Exito!',
-                message: 'Tipo e carta actualizada.',
+                message: 'Tipo e documento actualizada.',
                 type: 'success',
                 duration: 3000,
               });
@@ -285,8 +285,8 @@ export default {
           .catch((err) => err);
       }
     };
-    const onEdit = (tipoCarta: object) => {
-      selected.value = tipoCarta;
+    const onEdit = (tipoDocumento: object) => {
+      selected.value = tipoDocumento;
       showDrawer.value = true;
     };
     const onCancel = () => {
@@ -299,7 +299,7 @@ export default {
       else onSort('');
     };
     const onDelete = (id: number) => {
-      ElMessageBox.confirm('Está seguro de eliminar esta tipo de carta?', 'Advertencia!', {
+      ElMessageBox.confirm('Está seguro de eliminar esta tipo de documento?', 'Advertencia!', {
         confirmButtonText: 'Aceptar',
         cancelButtonText: 'Cancelar',
         type: 'warning',
@@ -322,7 +322,7 @@ export default {
         });
     };
     const getTypeLabel = (key: string) => {
-      return tiposDeCampos?.find((tc: TipoCarta) => tc.key === key)?.label;
+      return tiposDeCampos?.find((tc: TipoDocumento) => tc.key === key)?.label;
     };
     return {
       onSorter,
@@ -344,7 +344,7 @@ export default {
       Delete,
       RefreshRight,
       getTypeLabel,
-      // from tipo de cartas
+      // from tipo de documentos
       formRef,
       showDrawer,
       errors,

@@ -26,12 +26,12 @@
       </el-space>
       <el-space fill style="width: 100%">
         <el-row :gutter="20">
-          <el-col :span="16" :offset="0">
+          <el-col :span="noRol ? 24 : 16" :offset="0">
             <el-form-item label="Usuario" prop="usuario">
               <el-input v-model="data.usuario" placeholder="Usuario" />
             </el-form-item>
           </el-col>
-          <el-col :span="8" :offset="0">
+          <el-col v-if="!noRol" :span="8" :offset="0">
             <el-form-item label="Rol" prop="rol">
               <select-rol v-model="data.rol" />
             </el-form-item>
@@ -76,10 +76,14 @@
     <el-space fill style="width: 100%">
       <el-row :gutter="10">
         <el-col :span="12" :offset="0">
-          <el-button style="width: 100%" :icon="PhFloppyDisk" type="primary" @click="onSave">GUARDAR</el-button>
+          <el-button :loading="loading" style="width: 100%" :icon="PhFloppyDisk" type="primary" @click="onSave"
+            >GUARDAR</el-button
+          >
         </el-col>
         <el-col :span="12" :offset="0">
-          <el-button style="width: 100%" :icon="Close" type="danger" @click="onCancel">CANCELAR</el-button>
+          <el-button :loading="loading" style="width: 100%" :icon="Close" type="danger" @click="onCancel"
+            >CANCELAR</el-button
+          >
         </el-col>
       </el-row>
     </el-space>
@@ -103,12 +107,26 @@ export default {
       type: Object,
       default: undefined,
     },
+    noRol: {
+      type: Boolean,
+      default: false,
+    },
+    loading: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: ['save', 'cancel', 'update:errors'],
   setup(props, { emit }) {
     const fileApi = useFileApi();
     const formRef = ref(undefined);
     const data = ref({});
+    function initComp() {
+      if (props.noRol) {
+        data.rol = 'admin';
+      }
+    }
+    initComp();
     const copySelected = () => {
       if (props.selected) data.value = { ...props.selected };
       else data.value = {};
@@ -189,6 +207,7 @@ export default {
           'materno',
           'email',
         ]);
+        initComp();
       }
     };
     const onCancel = () => {

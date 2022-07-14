@@ -2,18 +2,24 @@
   <div>
     <el-drawer
       v-model="showDrawer"
-      :title="`${selected ? 'EDITAR' : 'AGREGAR'} TIPO DE CARTA`"
+      :title="`${selected ? 'EDITAR' : 'AGREGAR'} TIPO DE DOCUMENTO`"
       size="30rem"
       direction="rtl"
     >
-      <tipo-carta-form ref="formRef" v-model:errors="errors" :selected="selected" @save="onSave" @cancel="onCancel" />
+      <tipo-documento-form
+        ref="formRef"
+        v-model:errors="errors"
+        :selected="selected"
+        @save="onSave"
+        @cancel="onCancel"
+      />
     </el-drawer>
-    <tipo-carta-campo-dialog v-model="showDialog" :tipo-carta="selected" @close="onCloseDialog" />
+    <tipo-documento-campo-dialog v-model="showDialog" :tipo-documento="selected" @close="onCloseDialog" />
     <el-card shadow="hover" :body-style="{ padding: '10px' }">
       <template #header>
         <div class="card-header">
-          <span class="font-bold">TIPOS DE CARTAS</span>
-          <el-button type="primary" size="default" :icon="Plus" @click="onNew">Agregar tipo de carta</el-button>
+          <span class="font-bold">TIPOS DE DOCUMENTOS</span>
+          <el-button type="primary" size="default" :icon="Plus" @click="onNew">Agregar tipo de documento</el-button>
         </div>
       </template>
       <el-table v-loading="loading" :data="lista" border stripe fit @sort-change="onSorter">
@@ -34,10 +40,10 @@
                     @click="onClickCampos(scope.row)"
                   ></el-button>
                 </el-tooltip>
-                <el-tooltip effect="dark" content="Editar tipo de carta" placement="bottom">
+                <el-tooltip effect="dark" content="Editar tipo de documento" placement="bottom">
                   <el-button type="warning" size="small" :icon="Edit" plain @click="onEdit(scope.row)"></el-button>
                 </el-tooltip>
-                <el-tooltip effect="dark" content="Eliminar tipo de carta" placement="bottom">
+                <el-tooltip effect="dark" content="Eliminar tipo de documento" placement="bottom">
                   <el-button
                     class="m-0"
                     type="danger"
@@ -149,14 +155,14 @@
 <script lang="ts">
 import { Plus, Edit, Delete, RefreshRight } from '@element-plus/icons-vue';
 import useResourceComposable from '@/composables/resource.composable';
-import TipoCartaForm from '@/views/tipo-cartas/tipo-carta.form.vue';
+import TipoDocumentoForm from '@/views/tipo-documentos/tipo-documento.form.vue';
 import { ComodinObject } from '@/types';
 import PhTextbox from '~icons/ph/textbox';
-import TipoCartaCampoDialog from '@/views/tipo-cartas/tipo-carta-campo.dialog.vue';
+import TipoDocumentoCampoDialog from '@/views/tipo-documentos/tipo-documento-campo.dialog.vue';
 
 export default {
-  name: 'TipoCartasPage',
-  components: { TipoCartaForm, TipoCartaCampoDialog },
+  name: 'TipoDocumentosPage',
+  components: { TipoDocumentoForm, TipoDocumentoCampoDialog },
   setup() {
     const {
       lista,
@@ -173,11 +179,11 @@ export default {
       create,
       update,
       remove,
-    } = useResourceComposable('tipo-cartas');
+    } = useResourceComposable('tipo-documentos');
     include.value = undefined;
     emptyFirst.value = true;
     getLista();
-    // from tipo de cartas
+    // from tipo de documentos
     const showDrawer = ref(false);
     const selected = ref<ComodinObject | undefined>(undefined);
     const errors = ref<object>({});
@@ -196,9 +202,10 @@ export default {
         create({ ...data, passwordConfirm: undefined })
           .then((resp) => {
             if (resp !== false) {
+              // eslint-disable-next-line no-undef
               ElNotification({
                 title: 'Exito!',
-                message: 'Tipo de carta creada.',
+                message: 'Tipo de documento creada.',
                 type: 'success',
                 duration: 3000,
               });
@@ -217,9 +224,10 @@ export default {
         update(selected.value.id, { ...UpData, passwordConfirm: undefined })
           .then((resp) => {
             if (resp !== false) {
+              // eslint-disable-next-line no-undef
               ElNotification({
                 title: 'Exito!',
-                message: 'Tipo e carta actualizada.',
+                message: 'Tipo e documento actualizada.',
                 type: 'success',
                 duration: 3000,
               });
@@ -232,8 +240,8 @@ export default {
           .catch((err) => err);
       }
     };
-    const onEdit = (tipoCarta: object) => {
-      selected.value = tipoCarta;
+    const onEdit = (tipoDocumento: object) => {
+      selected.value = tipoDocumento;
       showDrawer.value = true;
     };
     const onCancel = () => {
@@ -246,7 +254,8 @@ export default {
       else onSort('');
     };
     const onDelete = (id: number) => {
-      ElMessageBox.confirm('Está seguro de eliminar esta tipo de carta?', 'Advertencia!', {
+      // eslint-disable-next-line no-undef
+      ElMessageBox.confirm('Está seguro de eliminar esta tipo de documento?', 'Advertencia!', {
         confirmButtonText: 'Aceptar',
         cancelButtonText: 'Cancelar',
         type: 'warning',
@@ -274,8 +283,8 @@ export default {
       selected.value = undefined;
       showDialog.value = false;
     };
-    const onClickCampos = (tipoCarta: object) => {
-      selected.value = JSON.parse(JSON.stringify(tipoCarta));
+    const onClickCampos = (tipoDocumento: object) => {
+      selected.value = JSON.parse(JSON.stringify(tipoDocumento));
       showDialog.value = true;
     };
     return {
@@ -297,7 +306,7 @@ export default {
       Edit,
       Delete,
       RefreshRight,
-      // from tipo de cartas
+      // from tipo de documentos
       formRef,
       showDrawer,
       errors,

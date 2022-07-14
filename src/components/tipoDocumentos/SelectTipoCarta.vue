@@ -13,19 +13,19 @@
     @change="onChange"
   >
     <el-option
-      v-for="tipoCarta in lista"
-      :key="tipoCarta.id"
-      :label="`${optionLabel === 'nombre' ? tipoCarta.nombre : tipoCarta.id}`"
-      :value="optionValue === 'nombre' ? tipoCarta.nombre : tipoCarta.id"
+      v-for="tipoDocumento in lista"
+      :key="tipoDocumento.id"
+      :label="`${optionLabel === 'nombre' ? tipoDocumento.nombre : tipoDocumento.id}`"
+      :value="optionValue === 'nombre' ? tipoDocumento.nombre : tipoDocumento.id"
     >
-      <span style="float: left">{{ `${optionLabel === 'nombre' ? tipoCarta.nombre : tipoCarta.id}` }}</span>
+      <span style="float: left">{{ `${optionLabel === 'nombre' ? tipoDocumento.nombre : tipoDocumento.id}` }}</span>
     </el-option>
   </el-select>
 </template>
 
 <script setup lang="ts">
 import useResourceComposable from '@/composables/resource.composable';
-import { TipoCarta } from '@/api/types';
+import { TipoDocumento } from '@/api/types';
 
 const props = defineProps({
   modelValue: {
@@ -67,7 +67,7 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['update:modelValue', 'onChange']);
-const { lista, getLista, where, pagination, loading } = useResourceComposable<TipoCarta>('tipo-cartas');
+const { lista, getLista, where, pagination, loading } = useResourceComposable<TipoDocumento>('tipo-documentos');
 const val = computed({
   get: () => props.modelValue,
   set: (value) => emit('update:modelValue', value),
@@ -101,7 +101,7 @@ watch(
 </script>
 <script lang="ts">
 export default {
-  name: 'SelectTipoCarta',
+  name: 'SelectTipoDocumento',
 };
 </script>
 <style scoped></style>

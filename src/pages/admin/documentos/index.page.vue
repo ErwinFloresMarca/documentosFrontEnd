@@ -7,7 +7,7 @@
 <script setup lang="ts"></script>
 <script lang="ts">
 export default {
-  name: 'IndexCartasPage',
+  name: 'IndexDocumentosPage',
 };
 </script>
 

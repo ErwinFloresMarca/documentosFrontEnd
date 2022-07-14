@@ -1,18 +1,16 @@
 <template>
-  <el-dialog v-model="showDialog" title="ASIGNAR CAMPOS" width="350px" :before-close="onClose">
-    <strong>Tipo de carta: </strong>{{ tipoCarta?.nombre }}
-    <el-divider direction="horizontal" content-position="left">Campos</el-divider>
-    <el-scrollbar height="200px">
-      <el-tree
-        v-loading="loading"
-        :data="lista"
-        node-key="id"
-        :props="{ label: 'nombre' }"
-        :default-checked-keys="selectedTC"
-        show-checkbox
-        @check="onClickTC"
-      ></el-tree>
-    </el-scrollbar>
+  <el-dialog v-model="showDialog" title="ASIGNAR TIPOS DE DOCUMENTOS" width="350px" :before-close="onClose">
+    <strong>Area: </strong>{{ area?.nombre }}
+    <el-divider direction="horizontal" content-position="left">Tipos de Documentos</el-divider>
+    <el-tree
+      v-loading="loading"
+      :data="lista"
+      node-key="id"
+      :props="{ label: 'nombre' }"
+      :default-checked-keys="selectedTC"
+      show-checkbox
+      @check="onClickTC"
+    ></el-tree>
     <template #footer>
       <span>
         <el-button @click="onClose">Cerrar</el-button>
@@ -23,12 +21,12 @@
 
 <script lang="ts">
 import { PropType } from 'vue';
-import { ICampo, TipoCarta } from '@/api/types';
+import { Area, ITipoDocumento } from '@/api/types';
 import useResourceComposable from '@/composables/resource.composable';
 import useResourceApi from '@/api/resource';
 
 export default {
-  name: 'TipoCartaCampoDialog',
+  name: 'AreaTipoDocumentoDialog',
 };
 </script>
 
@@ -38,20 +36,20 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-  tipoCarta: {
-    type: Object as PropType<TipoCarta>,
+  area: {
+    type: Object as PropType<Area>,
     default: undefined,
   },
 });
-const tipoCartasApi = useResourceApi('tipo-cartas');
+const areasApi = useResourceApi('areas');
 const selectedTC = ref([]);
-const { loading, lista, paginate, getLista } = useResourceComposable('campos');
+const { loading, lista, paginate, getLista } = useResourceComposable('tipo-documentos');
 paginate.value = false;
 const initComponent = () => {
-  if (props.tipoCarta) {
-    getLista();
-    tipoCartasApi
-      .getLinks(props.tipoCarta.id, 'campos')
+  getLista();
+  if (props.area) {
+    areasApi
+      .getLinks(props.area.id, 'tipo-documentos')
       .then(({ data }) => {
         selectedTC.value = data;
       })
@@ -61,7 +59,7 @@ const initComponent = () => {
   }
 };
 initComponent();
-watch(() => props.tipoCarta, initComponent);
+watch(() => props.area, initComponent);
 const emit = defineEmits(['update:visible', 'close']);
 const showDialog = computed({
   get: () => props.visible,
@@ -70,13 +68,13 @@ const showDialog = computed({
 const onClose = () => {
   emit('close');
 };
-const onClickTC = async (tipoCarta: ICampo) => {
-  const linked = selectedTC.value.includes(tipoCarta.id as never);
-  if (props.tipoCarta) {
+const onClickTC = async (tipoDocumento: ITipoDocumento) => {
+  const linked = selectedTC.value.includes(tipoDocumento.id as never);
+  if (props.area) {
     loading.value = true;
-    await tipoCartasApi
-      .link(props.tipoCarta?.id, 'campos', {
-        relationId: tipoCarta.id,
+    await areasApi
+      .link(props.area?.id, 'tipo-documentos', {
+        relationId: tipoDocumento.id,
         link: !linked,
       })
       .then(({ data }) => {

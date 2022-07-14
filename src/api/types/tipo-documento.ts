@@ -1,6 +1,6 @@
 import { IArea } from './area';
 
-export interface ITipoCarta {
+export interface ITipoDocumento {
   id: number;
   nombre: string;
   estado: boolean;
@@ -8,11 +8,11 @@ export interface ITipoCarta {
   createdAt: string | Date;
 
   areas: Array<IArea>;
-  cartas: Array<any>;
+  documentos: Array<any>;
   campos: Array<any>;
 }
 
-export class TipoCarta implements ITipoCarta {
+export class TipoDocumento implements ITipoDocumento {
   id: number;
 
   nombre: string;
@@ -25,18 +25,18 @@ export class TipoCarta implements ITipoCarta {
 
   areas: Array<IArea>;
 
-  cartas: Array<any>;
+  documentos: Array<any>;
 
   campos: Array<any>;
 
-  constructor(object: ITipoCarta) {
+  constructor(object: ITipoDocumento) {
     this.id = object.id;
     this.nombre = object.nombre;
     this.estado = object.estado;
     this.updatedAt = object.updatedAt;
     this.createdAt = object.createdAt;
     this.areas = object.areas;
-    this.cartas = object.cartas;
+    this.documentos = object.documentos;
     this.campos = object.campos;
   }
 }

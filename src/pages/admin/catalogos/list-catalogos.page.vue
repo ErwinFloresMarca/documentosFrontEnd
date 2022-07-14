@@ -26,10 +26,10 @@
                 <el-button type="primary" :icon="RefreshRight" size="small" circle @click="getLista"></el-button>
               </template>
               <div class="flex flex-wrap justify-around" style="width: 100%">
-                <el-tooltip effect="dark" content="Editar tipo de carta" placement="bottom">
+                <el-tooltip effect="dark" content="Editar tipo de documento" placement="bottom">
                   <el-button type="warning" size="small" :icon="Edit" plain @click="onEdit(scope.row)"></el-button>
                 </el-tooltip>
-                <el-tooltip effect="dark" content="Eliminar tipo de carta" placement="bottom">
+                <el-tooltip effect="dark" content="Eliminar tipo de documento" placement="bottom">
                   <el-button
                     class="m-0"
                     type="danger"
@@ -138,7 +138,7 @@ pagination.value.limit = 10;
 include.value = undefined;
 emptyFirst.value = true;
 getLista();
-// from tipo de cartas
+// from tipo de documentos
 const showDrawer = ref(false);
 const selected = ref<Catalogo | undefined>(undefined);
 const errors = ref<object>({});
@@ -159,7 +159,7 @@ const onSave = (data: { [key: string]: string | undefined }) => {
         if (resp !== false) {
           ElNotification({
             title: 'Exito!',
-            message: 'Tipo de carta creada.',
+            message: 'Tipo de documento creada.',
             type: 'success',
             duration: 3000,
           });
@@ -180,7 +180,7 @@ const onSave = (data: { [key: string]: string | undefined }) => {
         if (resp !== false) {
           ElNotification({
             title: 'Exito!',
-            message: 'Tipo e carta actualizada.',
+            message: 'Tipo e documento actualizada.',
             type: 'success',
             duration: 3000,
           });
@@ -193,8 +193,8 @@ const onSave = (data: { [key: string]: string | undefined }) => {
       .catch((err) => err);
   }
 };
-const onEdit = (tipoCarta: ICatalogo) => {
-  selected.value = tipoCarta;
+const onEdit = (tipoDocumento: ICatalogo) => {
+  selected.value = tipoDocumento;
   showDrawer.value = true;
 };
 const onCancel = () => {
@@ -207,7 +207,7 @@ const onSorter = (val: ComodinObject) => {
   else onSort('');
 };
 const onDelete = (id: number) => {
-  ElMessageBox.confirm('Está seguro de eliminar esta tipo de carta?', 'Advertencia!', {
+  ElMessageBox.confirm('Está seguro de eliminar esta tipo de documento?', 'Advertencia!', {
     confirmButtonText: 'Aceptar',
     cancelButtonText: 'Cancelar',
     type: 'warning',

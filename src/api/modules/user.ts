@@ -8,6 +8,7 @@ const useUsuarioApi = () => {
     list: (data: any) => service.get(`/${endpoint}`, data),
     getById: (id: string | number, data?: any) => service.get(`/${endpoint}/${id}`, data),
     create: (data: any) => service.post(`/${endpoint}/sign-up`, data),
+    createAdmin: (data: any) => service.post(`/${endpoint}/sign-up/admin`, data),
     update: (id: number | string, data: any) => service.patch(`/${endpoint}/${id}`, data),
     changePassword: (id: number | string, data: any) => service.patch(`/${endpoint}/${id}/change-password`, data),
   };

@@ -72,9 +72,10 @@
 import { Campo } from '@/api/types';
 import useResourceApi from '@/api/resource';
 import { camposInputTypes } from '@/utils/camposType';
+import { ComodinObject } from '@/types';
 
 const props = defineProps({
-  tipoCartaId: {
+  tipoDocumentoId: {
     type: Number,
     required: true,
   },
@@ -101,14 +102,14 @@ const cleanDataCampos = () => {
     dataCampos[key] = undefined;
   });
 };
-const copyToDataCampos = (data) => {
+const copyToDataCampos = (data: ComodinObject) => {
   Object.assign(dataCampos, data);
 };
 
 function initComponent() {
   loading.value = true;
-  const tipoCartaCamposRsrc = useResourceApi(`tipo-cartas/${props.tipoCartaId}/campos`);
-  tipoCartaCamposRsrc
+  const tipoDocumentoCamposRsrc = useResourceApi(`tipo-documentos/${props.tipoDocumentoId}/campos`);
+  tipoDocumentoCamposRsrc
     .list()
     .then(({ data }: { data: Array<Campo> }) => {
       campos.value = data;
@@ -146,7 +147,7 @@ watch(
 
 initComponent();
 watch(
-  () => props.tipoCartaId,
+  () => props.tipoDocumentoId,
   (current) => {
     if (current) {
       cleanDataCampos();
@@ -163,7 +164,7 @@ defineExpose({
 
 <script lang="ts">
 export default {
-  name: 'CartaCamposForm',
+  name: 'DocumentoCamposForm',
 };
 </script>
 

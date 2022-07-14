@@ -4,8 +4,8 @@ export interface IArea {
   updatedAt: string | Date;
   createdAt: string | Date;
 
-  tiposCartas: Array<any>;
-  cartas: Array<any>;
+  tiposDocumentos: Array<any>;
+  documentos: Array<any>;
   responsables: Array<any>;
 }
 
@@ -18,9 +18,9 @@ export class Area implements IArea {
 
   createdAt: string | Date;
 
-  tiposCartas: Array<any>;
+  tiposDocumentos: Array<any>;
 
-  cartas: Array<any>;
+  documentos: Array<any>;
 
   responsables: Array<any>;
 
@@ -29,8 +29,8 @@ export class Area implements IArea {
     this.nombre = object.nombre;
     this.updatedAt = object.updatedAt;
     this.createdAt = object.createdAt;
-    this.tiposCartas = object.tiposCartas;
-    this.cartas = object.cartas;
+    this.tiposDocumentos = object.tiposDocumentos;
+    this.documentos = object.documentos;
     this.responsables = object.responsables;
   }
 }

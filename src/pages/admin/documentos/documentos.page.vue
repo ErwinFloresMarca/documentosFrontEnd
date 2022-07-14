@@ -6,14 +6,14 @@
       width="min(600px, 100%)"
       @close="onCancelAssignAreas"
     >
-      <asignar-areas :carta-id="cartaId" @save="onCancelAssignAreas" />
+      <asignar-areas :documento-id="documentoId" @save="onCancelAssignAreas" />
     </el-dialog>
 
     <el-card shadow="hover" :body-style="{ padding: '10px' }">
       <template #header>
         <div class="card-header">
-          <span class="font-bold uppercase">CARTAS</span>
-          <el-button type="primary" size="default" :icon="Plus" @click="onNew">Agregar carta</el-button>
+          <span class="font-bold uppercase">DOCUMENTOS</span>
+          <el-button type="primary" size="default" :icon="Plus" @click="onNew">Agregar documento</el-button>
         </div>
       </template>
       <el-table v-loading="loading" :data="lista" border stripe fit @sort-change="onSorter">
@@ -33,7 +33,7 @@
                     @click="onAssignAreas(scope.row.id)"
                   ></el-button>
                 </el-tooltip>
-                <el-tooltip effect="dark" content="Eliminar tipo de carta" placement="bottom">
+                <el-tooltip effect="dark" content="Eliminar tipo de documento" placement="bottom">
                   <el-button
                     class="m-0"
                     type="danger"
@@ -98,17 +98,23 @@
             </custom-column-header>
           </template>
         </el-table-column>
-        <el-table-column header-align="center" align="center" label="TIPO DE CARTA" min-width="200px" sortable="custom">
+        <el-table-column
+          header-align="center"
+          align="center"
+          label="TIPO DE DOCUMENTO"
+          min-width="200px"
+          sortable="custom"
+        >
           <template #default="scope">
-            <custom-column-header :scope="scope" prop="tipoCartasId">
+            <custom-column-header :scope="scope" prop="tipoDocumentosId">
               <template #header>
-                <filter-input v-model="where.tipoCartasId" operator="inq">
+                <filter-input v-model="where.tipoDocumentosId" operator="inq">
                   <template #default="props">
-                    <select-tipo-carta
+                    <select-tipo-documento
                       v-model="props.filter.value"
                       multiple
                       placeholder="TODOS"
-                      :default-where="defaultWhereTipoCartas"
+                      :default-where="defaultWhereTipoDocumentos"
                       style="width: 100%"
                       @on-change="getLista"
                     />
@@ -116,7 +122,7 @@
                 </filter-input>
               </template>
               <template #default>
-                {{ scope.row.tipoCarta.nombre }}
+                {{ scope.row.tipoDocumento.nombre }}
               </template>
             </custom-column-header>
           </template>
@@ -140,9 +146,9 @@
 <script setup lang="ts">
 import { Plus, Delete, RefreshRight } from '@element-plus/icons-vue';
 import useResourceComposable from '@/composables/resource.composable';
-import AsignarAreas from '@/views/cartas/asignar-areas.vue';
+import AsignarAreas from '@/views/documentos/asignar-areas.vue';
 import { ComodinObject } from '@/types';
-import { Carta } from '@/api/types';
+import { Documento } from '@/api/types';
 import PhBuildings from '~icons/ph/buildings';
 
 const router = useRouter();
@@ -159,25 +165,25 @@ const {
   onSort,
   getLista,
   remove,
-} = useResourceComposable<Carta>('cartas');
-include.value = ['tipoCarta'];
+} = useResourceComposable<Documento>('documentos');
+include.value = ['tipoDocumento'];
 emptyFirst.value = true;
 getLista();
-// from tipo de cartas
+// from tipo de documentos
 const onNew = () => {
   router.push({
-    name: 'NuevaCarta',
+    name: 'NuevaDocumento',
   });
 };
-// const onEdit = (tipoCarta: ICarta) => {
-//   console.log('on edit carta');
+// const onEdit = (tipoDocumento: IDocumento) => {
+//   console.log('on edit documento');
 // };
 const onSorter = (val: ComodinObject) => {
   if (val.prop) onSort(`${val.prop} ${val.order.includes('ascen') ? 'asc' : 'desc'}`);
   else onSort('');
 };
 const onDelete = (id: number) => {
-  ElMessageBox.confirm('Está seguro de eliminar esta carta?', 'Advertencia!', {
+  ElMessageBox.confirm('Está seguro de eliminar esta documento?', 'Advertencia!', {
     confirmButtonText: 'Aceptar',
     cancelButtonText: 'Cancelar',
     type: 'warning',
@@ -199,25 +205,25 @@ const onDelete = (id: number) => {
       });
     });
 };
-const defaultWhereTipoCartas = computed({
+const defaultWhereTipoDocumentos = computed({
   get: () => ({}),
   set: (value) => value,
 });
 // asignar areas
 const showDialogAssignAreas = ref(false);
-const cartaId = ref<number | undefined>();
+const documentoId = ref<number | undefined>();
 const onAssignAreas = (cId) => {
-  cartaId.value = cId;
+  documentoId.value = cId;
   showDialogAssignAreas.value = true;
 };
 const onCancelAssignAreas = () => {
-  cartaId.value = undefined;
+  documentoId.value = undefined;
   showDialogAssignAreas.value = false;
 };
 </script>
 <script lang="ts">
 export default {
-  name: 'CartasPage',
+  name: 'DocumentosPage',
 };
 </script>
 

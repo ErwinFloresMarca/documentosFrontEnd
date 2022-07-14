@@ -3,7 +3,7 @@
     <el-drawer v-model="showDrawer" title="AGREGAR AREA" size="30rem" direction="rtl" @close="onCancel">
       <area-form ref="formRef" v-model:errors="errors" :selected="selected" @save="onSave" @cancel="onCancel" />
     </el-drawer>
-    <area-tipo-carta-dialog v-model="showDialog" :area="selected" @close="onCloseDialog" />
+    <area-tipo-documento-dialog v-model="showDialog" :area="selected" @close="onCloseDialog" />
     <nuevo-responsable-area-dialog
       v-model="showDialogResponsable"
       :area="areaResponsable"
@@ -26,13 +26,13 @@
                 <el-button type="primary" :icon="RefreshRight" size="small" circle @click="getLista"></el-button>
               </template>
               <div class="flex flex-wrap justify-around" style="width: 100%">
-                <el-tooltip effect="dark" content="Asignar tipos de cartas" placement="bottom">
+                <el-tooltip effect="dark" content="Asignar tipos de documentos" placement="bottom">
                   <el-button
                     type="primary"
                     size="small"
                     :icon="DocumentCopy"
                     plain
-                    @click="onClickTipoCartas(scope.row)"
+                    @click="onClickTipoDocumentos(scope.row)"
                   ></el-button>
                 </el-tooltip>
                 <el-tooltip effect="dark" content="Editar area" placement="bottom">
@@ -190,7 +190,7 @@ import useResourceComposable from '@/composables/resource.composable';
 import AreaForm from '@/views/areas/area.form.vue';
 import { ComodinObject } from '@/types';
 import { Area } from '@/api/types';
-import AreaTipoCartaDialog from '../../views/areas/area-tipo-carta.dialog.vue';
+import AreaTipoDocumentoDialog from '../../views/areas/area-tipo-documento.dialog.vue';
 import PhUserCirclePlus from '~icons/ph/user-circle-plus';
 import PhUserCircleMinus from '~icons/ph/user-circle-minus';
 import NuevoResponsableAreaDialog from '@/views/areas/nuevo-responsable-area-dialog.vue';
@@ -198,7 +198,7 @@ import useResourceApi from '@/api/resource';
 
 export default {
   name: 'AreasPage',
-  components: { AreaForm, AreaTipoCartaDialog, NuevoResponsableAreaDialog },
+  components: { AreaForm, AreaTipoDocumentoDialog, NuevoResponsableAreaDialog },
   setup() {
     const {
       lista,
@@ -326,13 +326,13 @@ export default {
           });
         });
     };
-    // asignar tipos de cartas
+    // asignar tipos de documentos
     const showDialog = ref(false);
     const onCloseDialog = () => {
       selected.value = undefined;
       showDialog.value = false;
     };
-    const onClickTipoCartas = (area: Area) => {
+    const onClickTipoDocumentos = (area: Area) => {
       selected.value = area;
       showDialog.value = true;
     };
@@ -400,10 +400,10 @@ export default {
       onEdit,
       onSave,
       onCancel,
-      // asignar Tipos de cartas dialog
+      // asignar Tipos de documentos dialog
       showDialog,
       onCloseDialog,
-      onClickTipoCartas,
+      onClickTipoDocumentos,
       DocumentCopy,
       // asignar responsable
       loadingResp,

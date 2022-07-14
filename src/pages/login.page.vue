@@ -10,6 +10,7 @@
           </div>
         </div>
         <login-form v-model="form" @on-submit="onSubmit" />
+        <el-button type="SUCCESS" @click="$router.push({ name: 'SignUp' })">REGIATRAR USUARIO</el-button>
       </div>
     </div>
   </div>
@@ -47,8 +48,8 @@ export default {
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  min-height: fit-content;
-  height: 100%;
+  min-height: 454px;
+  height: max(100%);
   padding: 35px;
 }
 .login-form {

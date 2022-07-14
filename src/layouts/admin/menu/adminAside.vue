@@ -20,7 +20,7 @@
           </el-image>
         </div>
         <div v-if="!menuCollapsed" class="flex flex-width justify-center items-center" style="width: auto">
-          <strong class="text-light-50">CARTAS</strong>
+          <strong class="text-light-50">DOCUMENTOS</strong>
         </div>
       </div>
       <MenuItem
@@ -89,7 +89,7 @@ export default {
   border-color: v-bind('menu.backgroundColor');
 }
 .el-menu-vertical-demo:not(.el-menu--collapse) {
-  width: 200px;
+  width: 220px;
 }
 .image-slot .el-icon {
   font-size: 30px;

@@ -37,7 +37,7 @@ interface Props {
   errors?: object;
 }
 export default {
-  name: 'TipoCartaForm',
+  name: 'TipoDocumentoForm',
   props: {
     errors: {
       type: Object,
