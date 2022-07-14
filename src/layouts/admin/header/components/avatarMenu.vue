@@ -3,9 +3,9 @@
     <div class="avatar-container flex flex-wrap justify-end items-center ml-2" @click="native">
       <div class="text-right hidden-xs-only">
         <p class="text-light-900 font-bold">{{ fullName }}</p>
-        <p class="text-opacity-50 mt-1 font-bold">{{ getUser.rol.toUpperCase() }}</p>
+        <p class="text-opacity-50 mt-1 font-bold">{{ auth.user.rol.toUpperCase() }}</p>
       </div>
-      <el-avatar class="ml-2" size="default" :src="fileApi.downloadUrl(getUser.avatar)">
+      <el-avatar class="ml-2" size="default" :src="userAvatar">
         <img src="/images/avatar/circle.png" />
       </el-avatar>
     </div>
@@ -30,21 +30,24 @@ export default {
     const fileApi = useFileApi();
     const auth = useAuth();
     const router = useRouter();
-    const { getUser } = auth;
     const fullName = computed({
       get: () => {
-        return getUser ? `${getUser.nombres} ${getUser.paterno} ${getUser.materno}`.toUpperCase() : '';
+        return auth.user ? `${auth.user.nombres} ${auth.user.paterno} ${auth.user.materno}`.toUpperCase() : '';
       },
     });
     const logout = () => {
       auth.logout();
       router.push('/login');
     };
+    const userAvatar = computed({
+      get: () => fileApi.downloadUrl(auth.user.avatar),
+    });
     return {
       fullName,
-      getUser,
+      auth,
       logout,
       fileApi,
+      userAvatar,
     };
   },
 };

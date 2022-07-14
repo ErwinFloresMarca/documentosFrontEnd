@@ -10,7 +10,9 @@
           </div>
         </div>
         <login-form v-model="form" @on-submit="onSubmit" />
-        <el-button type="SUCCESS" @click="$router.push({ name: 'SignUp' })">REGIATRAR USUARIO</el-button>
+        <el-button v-if="cantUsers === 0" class="w-full" type="success" @click="$router.push({ name: 'SignUp' })"
+          >REGIATRAR USUARIO</el-button
+        >
       </div>
     </div>
   </div>
@@ -24,6 +26,13 @@ import useAuth from '@/store/auth';
 const form = reactive({ username: '', password: '' });
 const auth = useAuth();
 const router = useRouter();
+const cantUsers = ref(1);
+const updateCantUsers = async () => {
+  cantUsers.value = await auth.getCantUsers();
+};
+
+updateCantUsers();
+
 const onSubmit = async (username: string, password: string) => {
   const successLogin = await auth.login(username, password);
   if (successLogin) {
@@ -48,8 +57,7 @@ export default {
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  min-height: 454px;
-  height: max(100%);
+  height: max(100%, 520px);
   padding: 35px;
 }
 .login-form {

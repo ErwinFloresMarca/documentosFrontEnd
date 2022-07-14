@@ -5,7 +5,7 @@
         <el-row :gutter="20">
           <el-col :span="10" :offset="0">
             <el-upload
-              class="avatar-uploader"
+              class="avatar-uploader flex flex-wrap justify-center items-center h-full"
               :action="fileApi.createUrl()"
               :show-file-list="false"
               :on-success="handleAvatarSuccess"
@@ -246,11 +246,14 @@ export default {
 <style>
 .avatar-uploader .el-upload {
   border: 1px dashed var(--el-border-color);
-  border-radius: 6px;
   cursor: pointer;
   position: relative;
   overflow: hidden;
   transition: var(--el-transition-duration-fast);
+
+  border-radius: 13px;
+  /* background: #e0e0e0; */
+  box-shadow: 8px 8px 12px #00000055, -8px -8px 12px #ffffff55;
 }
 
 .avatar-uploader .el-upload:hover {
@@ -260,8 +263,10 @@ export default {
 .el-icon.avatar-uploader-icon {
   font-size: 28px;
   color: #8c939d;
+  font-weight: 900;
   width: 130px;
   height: 130px;
   text-align: center;
+  /* background-color: #fff; */
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-wrap justify-center items-center align-center" style="width: 100%; height: 100vh">
     <div class="sign-up-container">
-      <h3>REGISTRAR USUARIO ADMINISTRADOR</h3>
+      <h3 class="text-light-50 font-bold">REGISTRAR USUARIO ADMINISTRADOR</h3>
       <sign-up-admin @success="onSuccess" @cancel="$router.push({ name: 'Login' })" />
     </div>
   </div>

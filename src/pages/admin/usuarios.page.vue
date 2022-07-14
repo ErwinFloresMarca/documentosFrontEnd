@@ -237,11 +237,13 @@ import useUsuariosComposable from '@/composables/usuarios.composable';
 import UsuarioForm from '@/views/usuarios/usuario.form.vue';
 import { ComodinObject } from '@/types';
 import ShowUser from '../../components/ShowUser.vue';
+import useAuth from '@/store/auth';
 
 export default {
   name: 'UsuariosPage',
   components: { UsuarioForm, ShowUser },
   setup() {
+    const auth = useAuth();
     const {
       lista,
       loading,
@@ -320,6 +322,7 @@ export default {
                 type: 'success',
                 duration: 3000,
               });
+              if (selected.value?.id === auth.user?.id) auth.refreshMe();
               cleanForm();
               showDrawer.value = false;
               getLista();
@@ -333,6 +336,7 @@ export default {
       showDrawer.value = true;
     };
     const onChangePassword = (usuarioId: number) => {
+      // eslint-disable-next-line no-undef
       ElMessageBox.prompt('Introduzca una nueva contraseña:  ', 'Cambiar contraseña', {
         confirmButtonText: 'Aceptar',
         cancelButtonText: 'Cancelar',

@@ -41,7 +41,7 @@ router.beforeEach((to, from, next) => {
     if (to.meta.roles) {
       // logica de roles
     }
-    if (to.name === 'Login') {
+    if (to.name === 'Login' || to.name === 'SignUp') {
       next('/admin/home');
       return;
     }

@@ -36,11 +36,13 @@ const onSave = async (userData: Partial<Usuario & { password: string; passwordCo
           type: 'success',
           duration: 3000,
         });
+        loading.value = false;
         emit('success', { username: userData.usuario, password: userData.password });
       }
     })
-    .catch((err) => err);
-  loading.value = false;
+    .catch(() => {
+      loading.value = false;
+    });
 };
 const onCancel = () => {
   emit('cancel');
@@ -58,7 +60,16 @@ export default {
 }
 
 :deep(.usuario-form) {
-  .input-text {
+  .el-form-item__error {
+    font-weight: bold;
+    text-shadow: rgb(0, 0, 0) 0px 0px 10px;
+    --darkreader-inline-color: #e8e6e3;
+    --darkreader-inline-bgimage: initial;
+  }
+  .el-form-item__label {
+    color: white;
+  }
+  .el-input {
     background-color: rgba(0, 0, 0, 0.3);
     border-radius: 7px;
   }
