@@ -112,7 +112,7 @@ export default {
         { required: true, message: 'Introduzca una descripción.', trigger: 'blur' },
         { min: 3, max: 30, message: 'La descripción es muy corto o largo.', trigger: 'blur' },
       ],
-      type: [{ required: true, message: 'Elija un tipo de campo.', trigger: 'blur' }],
+      type: [{ required: true, message: 'Elija un tipo de campo.', trigger: 'change' }],
       key: [{ required: true, message: 'Introduzca un codigo único.', trigger: 'blur' }],
     };
     const rules = computed<object>({

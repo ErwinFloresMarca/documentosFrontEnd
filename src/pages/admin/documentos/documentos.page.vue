@@ -76,31 +76,6 @@
         <el-table-column
           header-align="center"
           align="center"
-          prop="solicitante"
-          label="SOLICITANTE"
-          min-width="200px"
-          sortable="custom"
-        >
-          <template #default="scope">
-            <custom-column-header :scope="scope" prop="solicitante">
-              <template #header>
-                <filter-input v-model="where.tipo" operator="like" options="i">
-                  <template #default="props">
-                    <el-input
-                      v-model="props.filter.value"
-                      placeholder="solicitante"
-                      clearable
-                      @keydown.enter="getLista"
-                    ></el-input>
-                  </template>
-                </filter-input>
-              </template>
-            </custom-column-header>
-          </template>
-        </el-table-column>
-        <el-table-column
-          header-align="center"
-          align="center"
           label="TIPO DE DOCUMENTO"
           min-width="200px"
           sortable="custom"

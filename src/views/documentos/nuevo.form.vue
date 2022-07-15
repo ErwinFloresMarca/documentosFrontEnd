@@ -55,9 +55,6 @@
                   >
                   </el-date-picker>
                 </el-form-item>
-                <el-form-item label="Solicitante" prop="solicitante">
-                  <el-input v-model="dataDocumento.solicitante" placeholder="solicitante" clearable></el-input>
-                </el-form-item>
               </div>
             </el-space>
             <documento-campos-form

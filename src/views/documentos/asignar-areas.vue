@@ -2,7 +2,6 @@
   <div v-if="documento" v-loading="loading">
     <el-descriptions title="Información de la documento" direction="vertical" :column="3" border>
       <el-descriptions-item label="Numero de documento">{{ documento.numDoc }}</el-descriptions-item>
-      <el-descriptions-item label="Solicitante">{{ documento.solicitante }}</el-descriptions-item>
       <el-descriptions-item label="Fecha de recepción">{{
         $luxonDateTime.fromISO(documento.fechaRecepcion).toFormat('dd/LL/yyyy HH:mm:ss')
       }}</el-descriptions-item>
@@ -27,10 +26,12 @@ import useResourceApi from '@/api/resource';
 import { Area, Documento } from '@/api/types';
 import PhFloppyDisk from '~icons/ph/floppy-disk';
 import PhBuildings from '~icons/ph/buildings';
+import useDocumentoEventoResourceApi from '@/api/modules/documento-evento';
 
 const areasSeleccionadas = ref<Array<Area>>([]);
 const areaRsrc = useResourceApi<Area>('areas');
-const documentoRsrc = useResourceApi<Area>('documentos');
+const documentoRsrc = useResourceApi<Documento>('documentos');
+const deRsrc = useDocumentoEventoResourceApi();
 
 const props = defineProps({
   documentoId: {
@@ -44,19 +45,25 @@ const emit = defineEmits(['save']);
 const areas = ref([]);
 const documento = ref<Documento | undefined>();
 const loading = ref(false);
+
 async function initComponent() {
   if (props.documentoId) {
     loading.value = true;
+    // objener documento
     await documentoRsrc
       .getById(props.documentoId, { filter: { include: ['tipoDocumento'] } })
       .then(async ({ data }) => {
         if (data) {
           documento.value = data;
-          await areaRsrc.list().then(({ data }) => {
-            if (data) {
-              areas.value = data;
-            }
-          });
+          // obtener areas
+          await areaRsrc
+            .list({ filter: { where: { tipoDocumentos: { id: { inq: [documento.value.tipoDocumentosId] } } } } })
+            .then(({ data }) => {
+              if (data) {
+                areas.value = data;
+              }
+            });
+          // obtener areas relacionadas
           await documentoRsrc.getLinks(documento.value.id, 'areas').then(({ data }) => {
             if (data) areasSeleccionadas.value = data;
           });
@@ -75,6 +82,7 @@ const onSave = async () => {
   await areasSeleccionadas.value.every((areaId) =>
     documentoRsrc.link(documento.value.id, 'areas', { relationId: areaId, link: true }).then(({ data }) => data),
   );
+  // redistrar evento
   ElMessage({
     message: 'Asignaciones guardadas',
     type: 'success',
