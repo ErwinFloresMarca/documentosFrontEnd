@@ -4,7 +4,7 @@ export interface IDocumentoEvento {
   id: number;
   tipoEvento: string;
   color: string;
-  ejecutor: Usuario;
+  ejecutor?: Usuario;
   documentoId: number;
   estado: boolean;
   updatedAt: string | Date;
@@ -18,7 +18,7 @@ export class DocumentoEvento implements IDocumentoEvento {
 
   color: string;
 
-  ejecutor: Usuario;
+  ejecutor?: Usuario;
 
   documentoId: number;
 

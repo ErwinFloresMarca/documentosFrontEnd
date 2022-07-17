@@ -8,7 +8,7 @@ import PhTagChevron from '~icons/ph/tag-chevron';
 import PhFiles from '~icons/ph/files';
 import PhTextbox from '~icons/ph/textbox';
 import PhListNumbers from '~icons/ph/list-numbers';
-import PhEnvelopeOpen from '~icons/ph/envelope-open';
+import PhFileText from '~icons/ph/file-text';
 
 export const adminRoute: RouteRecordRaw = {
   path: '/admin',
@@ -52,7 +52,7 @@ export const adminRoute: RouteRecordRaw = {
       redirect: '/admin/documentos/list',
       meta: {
         title: 'Documentos',
-        icon: PhEnvelopeOpen,
+        icon: PhFileText,
         // elSvgIcon: '',
         hidden: false,
         auth: true,
@@ -64,7 +64,7 @@ export const adminRoute: RouteRecordRaw = {
           name: 'DocumentosList',
           meta: {
             title: 'Documentos',
-            icon: PhEnvelopeOpen,
+            icon: PhFileText,
             // elSvgIcon: '',
             hidden: false,
             auth: true,

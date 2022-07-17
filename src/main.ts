@@ -15,12 +15,22 @@ import 'virtual:windi-devtools';
 import '@/assets/styles/index.scss';
 import 'element-plus/theme-chalk/display.css';
 
+import roles from '@/directives/roles';
+
 const i18n = createI18n({
   locale: 'es',
   messages,
 });
 
 const app = createApp(App);
+
+declare module 'vue' {
+  interface ComponentCustomProperties {
+    $luxonDateTime: typeof DateTime;
+  }
+}
+
+app.directive('roles', roles);
 
 app.config.globalProperties.$luxonDateTime = DateTime;
 

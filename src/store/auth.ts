@@ -2,21 +2,11 @@ import { defineStore } from 'pinia';
 import useAuthApi from '@/api/modules/auth';
 import useUserApi from '@/api/modules/user';
 import router from '@/router';
-
-interface User {
-  id: number;
-  usuario: string;
-  nombres: string;
-  email?: string;
-  paterno?: string;
-  materno: string;
-  ci: string;
-  rol: string;
-  avatar?: string;
-}
+import { Usuario } from '@/api/types';
+import { ApiRol } from '@/types';
 
 interface Auth {
-  user?: User;
+  user?: Usuario;
   token?: string;
   isLoggedIn: boolean;
 }
@@ -39,6 +29,9 @@ const useAuth = defineStore({
   },
   // pinia mutations actions
   actions: {
+    isTecnico() {
+      return this.user?.rol === ApiRol.tecnico;
+    },
     // actions async tipo de tema
     async login(usuario: string, password: string): Promise<boolean> {
       // process login
@@ -61,10 +54,10 @@ const useAuth = defineStore({
       const authApi = useAuthApi();
       const isLogin = await authApi
         .me()
-        .then((resp: { data: User }) => {
+        .then((resp: { data: Usuario }) => {
           console.log('refresh me: ', resp);
           if (this.user) {
-            const userInfo: User = { ...this.user };
+            const userInfo: Usuario = { ...this.user };
             Object.assign(userInfo, resp.data);
             this.user = userInfo;
           }

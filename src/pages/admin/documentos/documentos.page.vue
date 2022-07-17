@@ -24,7 +24,7 @@
                 <el-button type="primary" :icon="RefreshRight" size="small" circle @click="getLista"></el-button>
               </template>
               <div class="flex flex-wrap justify-around" style="width: 100%">
-                <el-tooltip effect="dark" content="AsignarAreas" placement="bottom">
+                <el-tooltip v-if="!scope.row.tipoUltimoEvento" effect="dark" content="Asignar areas" placement="bottom">
                   <el-button
                     type="success"
                     size="small"
@@ -158,6 +158,7 @@ const onSorter = (val: ComodinObject) => {
   else onSort('');
 };
 const onDelete = (id: number) => {
+  // eslint-disable-next-line no-undef
   ElMessageBox.confirm('Está seguro de eliminar esta documento?', 'Advertencia!', {
     confirmButtonText: 'Aceptar',
     cancelButtonText: 'Cancelar',
@@ -187,8 +188,8 @@ const defaultWhereTipoDocumentos = computed({
 // asignar areas
 const showDialogAssignAreas = ref(false);
 const documentoId = ref<number | undefined>();
-const onAssignAreas = (cId) => {
-  documentoId.value = cId;
+const onAssignAreas = (dId: number) => {
+  documentoId.value = dId;
   showDialogAssignAreas.value = true;
 };
 const onCancelAssignAreas = () => {

@@ -11,7 +11,7 @@ export default function useGetQueryComposable() {
   const order = ref<string | Array<string>>('');
   const where = ref<ComodinObject>({});
   const fields = ref<ComodinObject>({});
-  const include = ref<Array<ComodinObject> | undefined>([]);
+  const include = ref<Array<ComodinObject | string> | undefined>([]);
   const getFilterObject = () => {
     const pagData: { skip?: number; limit?: number } = {};
     if (paginate.value) {
