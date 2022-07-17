@@ -91,6 +91,16 @@ export const adminRoute: RouteRecordRaw = {
           },
           component: () => import('@/pages/admin/documentos/edit.page.vue'),
         },
+        {
+          path: 'ver/:id',
+          name: 'ViewDocumento',
+          meta: {
+            title: 'Ver Documento',
+            hidden: true,
+            auth: true,
+          },
+          component: () => import('@/pages/admin/documentos/view.page.vue'),
+        },
       ],
     },
     {

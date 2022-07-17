@@ -7,8 +7,8 @@ export interface IDocumentoEvento {
   ejecutor?: Usuario;
   documentoId: number;
   estado: boolean;
-  updatedAt: string | Date;
-  createdAt: string | Date;
+  updatedAt: string;
+  createdAt: string;
 }
 
 export class DocumentoEvento implements IDocumentoEvento {
@@ -24,9 +24,9 @@ export class DocumentoEvento implements IDocumentoEvento {
 
   estado: boolean;
 
-  updatedAt: string | Date;
+  updatedAt: string;
 
-  createdAt: string | Date;
+  createdAt: string;
 
   constructor(object: IDocumentoEvento) {
     this.id = object.id;

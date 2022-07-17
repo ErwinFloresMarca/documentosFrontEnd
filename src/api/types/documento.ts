@@ -1,3 +1,4 @@
+import { File } from './file';
 import { DocumentoEvento } from './documento-evento';
 import { ComodinObject } from '../../types';
 import { TipoDocumento } from './tipo-documento';
@@ -17,6 +18,7 @@ export interface IDocumento {
   tipoDocumento?: TipoDocumento;
   ultimoEvento?: DocumentoEvento;
   documentoEventos?: DocumentoEvento[];
+  file?: File;
 }
 
 export class Documento implements IDocumento {
@@ -46,6 +48,8 @@ export class Documento implements IDocumento {
 
   ultimoEvento?: DocumentoEvento;
 
+  file?: File;
+
   constructor(object: IDocumento) {
     this.id = object.id;
     this.numDoc = object.numDoc;
@@ -60,5 +64,6 @@ export class Documento implements IDocumento {
     this.tipoDocumento = object.tipoDocumento;
     this.documentoEventos = object.documentoEventos;
     this.ultimoEvento = object.ultimoEvento;
+    this.file = object.file;
   }
 }

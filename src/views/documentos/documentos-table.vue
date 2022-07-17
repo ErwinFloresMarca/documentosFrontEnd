@@ -160,6 +160,7 @@ import useResourceComposable from '@/composables/resource.composable';
 import { Area, Campo, Documento, TipoDocumento } from '@/api/types';
 import useResourceApi from '@/api/resource';
 import useAuth from '@/store/auth';
+import router from '@/router';
 
 const props = defineProps({
   area: {
@@ -197,7 +198,7 @@ const onSorter = (val: ComodinObject) => {
 };
 
 function onViewDoc(doc: Documento) {
-  console.log('view documento: ', doc);
+  router.push({ name: 'ViewDocumento', params: { id: doc.id } });
 }
 
 function onCompleteDoc(doc: Documento) {

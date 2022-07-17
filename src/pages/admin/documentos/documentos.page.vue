@@ -141,7 +141,7 @@ const {
   getLista,
   remove,
 } = useResourceComposable<Documento>('documentos');
-include.value = ['tipoDocumento'];
+include.value = ['tipoDocumento', 'ultimoEvento'];
 emptyFirst.value = true;
 getLista();
 // from tipo de documentos
@@ -195,6 +195,7 @@ const onAssignAreas = (dId: number) => {
 const onCancelAssignAreas = () => {
   documentoId.value = undefined;
   showDialogAssignAreas.value = false;
+  getLista();
 };
 </script>
 <script lang="ts">
