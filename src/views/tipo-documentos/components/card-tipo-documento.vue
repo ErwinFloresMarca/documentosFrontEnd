@@ -88,54 +88,9 @@ export default {
   background-color: var(--el-color-warning-light-8);
   font-weight: bold;
   cursor: pointer;
-  opacity: 1;
-  background-image: linear-gradient(
-      30deg,
-      var(--el-color-warning-light-7) 12%,
-      transparent 12.5%,
-      transparent 87%,
-      var(--el-color-warning-light-7) 87.5%,
-      var(--el-color-warning-light-7)
-    ),
-    linear-gradient(
-      150deg,
-      var(--el-color-warning-light-7) 12%,
-      transparent 12.5%,
-      transparent 87%,
-      var(--el-color-warning-light-7) 87.5%,
-      var(--el-color-warning-light-7)
-    ),
-    linear-gradient(
-      30deg,
-      var(--el-color-warning-light-7) 12%,
-      transparent 12.5%,
-      transparent 87%,
-      var(--el-color-warning-light-7) 87.5%,
-      var(--el-color-warning-light-7)
-    ),
-    linear-gradient(
-      150deg,
-      var(--el-color-warning-light-7) 12%,
-      transparent 12.5%,
-      transparent 87%,
-      var(--el-color-warning-light-7) 87.5%,
-      var(--el-color-warning-light-7)
-    ),
-    linear-gradient(
-      60deg,
-      var(--el-color-warning-light-7) 77 25%,
-      transparent 25.5%,
-      transparent 75%,
-      var(--el-color-warning-light-7) 77 75%,
-      var(--el-color-warning-light-7) 77
-    ),
-    linear-gradient(
-      60deg,
-      var(--el-color-warning-light-7) 77 25%,
-      transparent 25.5%,
-      transparent 75%,
-      var(--el-color-warning-light-7) 77 75%,
-      var(--el-color-warning-light-7) 77
-    );
+  background: linear-gradient(135deg, var(--el-color-warning-light-7) 25%, transparent 25%) -40px 0/ 80px 80px,
+    linear-gradient(225deg, var(--el-color-warning-light-5) 25%, transparent 25%) -40px 0/ 80px 80px,
+    linear-gradient(315deg, var(--el-color-warning-light-9) 25%, transparent 25%) 0px 0/ 80px 80px,
+    linear-gradient(45deg, var(--el-color-warning-light-3) 25%, var(--el-color-warning-light-8) 25%) 0px 0/ 80px 80px;
 }
 </style>

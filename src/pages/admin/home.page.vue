@@ -32,27 +32,32 @@
           </div>
         </div>
       </template>
-      <div v-if="!area">
-        <AdminListAreas @on-select-one="onSelectArea" />
-      </div>
-      <div v-else-if="!tipoDocumento">
-        <AdminListTipoDocumentos :area="area" @on-select-one="onSelectTipoDocumento" />
-      </div>
-      <div v-else>
-        <el-row :gutter="20">
-          <el-col class="mb-2" :span="12" :sm="6" :offset="0">
-            <CardArea :area="area" />
-          </el-col>
-          <el-col class="mb-2" :span="12" :sm="6" :offset="0">
-            <ShowUser :usuario="auth.user" />
-          </el-col>
-          <el-col class="mb-2" :span="24" :sm="12" :offset="0">
-            <CardTipoDocumento :tipo-documento="tipoDocumento" :area="area" />
-          </el-col>
-          <el-col class="mb-2" :span="24" :offset="0">
-            <DocumentosTable :area="area" :tipo-documento="tipoDocumento" />
-          </el-col>
-        </el-row>
+      <template v-if="!(!changeArea && !area)">
+        <div v-if="!area">
+          <AdminListAreas @on-select-one="onSelectArea" />
+        </div>
+        <div v-else-if="!tipoDocumento">
+          <AdminListTipoDocumentos :area="area" @on-select-one="onSelectTipoDocumento" />
+        </div>
+        <div v-else>
+          <el-row :gutter="20">
+            <el-col class="mb-2" :span="12" :sm="6" :offset="0">
+              <CardArea :area="area" />
+            </el-col>
+            <el-col class="mb-2" :span="12" :sm="6" :offset="0">
+              <ShowUser :usuario="auth.user" />
+            </el-col>
+            <el-col class="mb-2" :span="24" :sm="12" :offset="0">
+              <CardTipoDocumento :tipo-documento="tipoDocumento" :area="area" />
+            </el-col>
+            <el-col class="mb-2" :span="24" :offset="0">
+              <DocumentosTable :area="area" :tipo-documento="tipoDocumento" />
+            </el-col>
+          </el-row>
+        </div>
+      </template>
+      <div v-else class="w-full flex flex-wrap justify-center">
+        <span>NO CUENTA CON UNA AREA ASIGNADA</span>
       </div>
     </el-card>
   </div>
@@ -74,9 +79,13 @@ import DocumentosTable from '@/views/documentos/documentos-table.vue';
 const area = ref<Area | undefined>(undefined);
 const tipoDocumento = ref<TipoDocumento | undefined>(undefined);
 const auth = useAuth();
-
+const changeArea = ref<boolean>(true);
+if (auth.isTecnico()) {
+  area.value = auth.area;
+  changeArea.value = false;
+}
 function onSelectArea(a: Area) {
-  area.value = a;
+  if (changeArea.value) area.value = a;
 }
 function onSelectTipoDocumento(td: TipoDocumento) {
   tipoDocumento.value = td;
@@ -87,8 +96,10 @@ function onClickArea() {
 }
 
 function onClickAreas() {
-  tipoDocumento.value = undefined;
-  area.value = undefined;
+  if (changeArea.value) {
+    tipoDocumento.value = undefined;
+    area.value = undefined;
+  }
 }
 </script>
 

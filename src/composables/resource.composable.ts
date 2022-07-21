@@ -11,11 +11,13 @@ export default function useResourceComposable<T>(endpoint: string) {
   const getLista = async (): Promise<T[]> => {
     loading.value = true;
     const query = getFilterObject();
-    const respCount = await resource
-      .count(query.filter)
-      .then(({ data }) => data)
-      .catch(() => false);
-    pagination.value.total = respCount.count;
+    if (paginate.value) {
+      const respCount = await resource
+        .count(query.filter)
+        .then(({ data }) => data)
+        .catch(() => false);
+      pagination.value.total = respCount.count;
+    }
     const respLista = await resource
       .list(query)
       .then(({ data }) => data)

@@ -1,7 +1,7 @@
 <template>
   <template v-if="!item.hidden">
     <template v-if="showSidebarItem(item, item.children)">
-      <LinkMenu v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)">
+      <LinkMenu v-if="onlyOneChild.meta && !onlyOneChild.hidden" :to="resolvePath(onlyOneChild.path)">
         <el-menu-item :index="resolvePath(onlyOneChild.path)" :class="{ 'submenu-title-noDropdown': !isNest }">
           <icon-item :meta="onlyOneChild.meta || item.meta" />
           <template #title>{{ onlyOneChild.meta?.title }}</template>
@@ -28,6 +28,7 @@
 import path from 'path-browserify';
 import LinkMenu from './LinkMenu.vue';
 import IconItem from './IconItem.vue';
+import useAuth from '@/store/auth';
 
 export default {
   name: 'MenuItem',
@@ -49,9 +50,10 @@ export default {
   setup(props) {
     const onlyOneChild = ref(null);
     const showingChildren = ref([]);
+    const auth = useAuth();
     const showSidebarItem = (parent, children = []) => {
       showingChildren.value = children.filter((item) => {
-        if (item.meta.hidden) {
+        if (item.meta.hidden || !auth.rolIn(item.meta.roles)) {
           return false;
         }
         onlyOneChild.value = item;
@@ -61,7 +63,12 @@ export default {
         return true;
       }
       if (showingChildren.value.length === 0) {
-        onlyOneChild.value = { ...parent, path: '', noChildren: true };
+        onlyOneChild.value = {
+          ...parent,
+          path: '',
+          noChildren: true,
+          hidden: !!parent.children || !auth.rolIn(parent.meta.roles),
+        };
         return true;
       }
       return false;

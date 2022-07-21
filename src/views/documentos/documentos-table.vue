@@ -17,7 +17,12 @@
                   @click="onViewDoc(scope.row)"
                 ></el-button>
               </el-tooltip>
-              <el-tooltip v-if="isTecnico()" effect="dark" content="Marcar como completado" placement="bottom">
+              <el-tooltip
+                v-if="isTecnico() && scope.row.tipoUltimoEvento !== DocumentoEventoTipos.culminado.tipo"
+                effect="dark"
+                content="Marcar como completado"
+                placement="bottom"
+              >
                 <el-button
                   class="m-0"
                   type="success"
@@ -116,7 +121,14 @@
           </custom-column-header>
         </template>
       </el-table-column>
-      <el-table-column header-align="center" prop="tipoUltimoEvento" label="ESTADO" min-width="140px" sortable="custom">
+      <el-table-column
+        header-align="center"
+        align="center"
+        prop="tipoUltimoEvento"
+        label="ESTADO"
+        min-width="140px"
+        sortable="custom"
+      >
         <template #default="scope">
           <custom-column-header :scope="scope" prop="tipoUltimoEvento">
             <template #header>
@@ -130,6 +142,11 @@
                   ></el-input>
                 </template>
               </filter-input>
+            </template>
+            <template #default>
+              <el-tag effect="dark" :color="scope.row.ultimoEvento.color">{{
+                scope.row?.ultimoEvento?.tipoEvento
+              }}</el-tag>
             </template>
           </custom-column-header>
         </template>
@@ -161,6 +178,8 @@ import { Area, Campo, Documento, TipoDocumento } from '@/api/types';
 import useResourceApi from '@/api/resource';
 import useAuth from '@/store/auth';
 import router from '@/router';
+import useDocumentoEventoResourceApi from '@/api/modules/documento-evento';
+import DocumentoEventoTipos, { ITipoEvento } from '@/utils/documento-eventos';
 
 const props = defineProps({
   area: {
@@ -201,8 +220,58 @@ function onViewDoc(doc: Documento) {
   router.push({ name: 'ViewDocumento', params: { id: doc.id } });
 }
 
+const auth = useAuth();
+const deRsrc = useDocumentoEventoResourceApi();
+
+async function createEventDocument(tipoEvento: ITipoEvento, documento: Documento) {
+  if (documento && auth.user) {
+    loading.value = true;
+    await deRsrc
+      .create({
+        color: tipoEvento.color,
+        tipoEvento: tipoEvento.tipo,
+        documentoId: documento.id,
+        ejecutor: auth.user,
+      })
+      .then(() => {
+        ElMessage({
+          type: 'success',
+          message: 'Documento marcado como completado.',
+          duration: 3000,
+        });
+        initComponent();
+      })
+      .catch(() => {
+        ElMessage({
+          message: 'Error al crear evento',
+          type: 'error',
+          duration: 3000,
+        });
+      });
+    loading.value = false;
+  }
+}
 function onCompleteDoc(doc: Documento) {
-  console.log('complete doc: ', doc);
+  ElMessageBox.confirm('Está seguro de marcar como completado este documento?', 'Advertencia!', {
+    confirmButtonText: 'Aceptar',
+    cancelButtonText: 'Cancelar',
+    type: 'warning',
+  })
+    .then(() => {
+      createEventDocument(DocumentoEventoTipos.culminado, doc).then(() => {
+        ElMessage({
+          type: 'success',
+          message: 'Documento culminado',
+          duration: 3000,
+        });
+      });
+    })
+    .catch(() => {
+      ElMessage({
+        type: 'info',
+        message: 'Cancelado',
+      });
+    });
 }
 </script>
 

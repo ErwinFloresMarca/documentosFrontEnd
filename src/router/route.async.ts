@@ -1,5 +1,6 @@
-// 需要鉴权的业务路由
 import { RouteRecordRaw } from 'vue-router';
+import { ApiRol } from '../types';
+// 需要鉴权的业务路由
 
 import PhHouseLine from '~icons/ph/house-line';
 import PhUserCircleGear from '~icons/ph/user-circle-gear';
@@ -68,6 +69,7 @@ export const adminRoute: RouteRecordRaw = {
             // elSvgIcon: '',
             hidden: false,
             auth: true,
+            roles: [ApiRol.admin, ApiRol.director, ApiRol.secretario],
           },
           component: () => import('@/pages/admin/documentos/documentos.page.vue'),
         },
@@ -78,6 +80,7 @@ export const adminRoute: RouteRecordRaw = {
             title: 'Nueva Documento',
             hidden: true,
             auth: true,
+            roles: [ApiRol.admin, ApiRol.director, ApiRol.secretario],
           },
           component: () => import('@/pages/admin/documentos/nuevo.page.vue'),
         },
@@ -88,6 +91,7 @@ export const adminRoute: RouteRecordRaw = {
             title: 'Editar Documento',
             hidden: true,
             auth: true,
+            roles: [ApiRol.admin, ApiRol.director, ApiRol.secretario],
           },
           component: () => import('@/pages/admin/documentos/edit.page.vue'),
         },
@@ -112,7 +116,7 @@ export const adminRoute: RouteRecordRaw = {
         // elSvgIcon: '',
         hidden: false,
         auth: true,
-        roles: ['admin', 'secretario', 'director'],
+        roles: [ApiRol.admin, ApiRol.director, ApiRol.secretario],
       },
       component: () => import('@/pages/admin/areas.page.vue'),
     },
@@ -125,7 +129,7 @@ export const adminRoute: RouteRecordRaw = {
         // elSvgIcon: '',
         hidden: false,
         auth: true,
-        roles: ['admin', 'secretario', 'director'],
+        roles: [ApiRol.admin, ApiRol.director, ApiRol.secretario],
       },
       component: () => import('@/pages/admin/catalogos/index.page.vue'),
       children: [
@@ -138,7 +142,7 @@ export const adminRoute: RouteRecordRaw = {
             // elSvgIcon: '',
             hidden: false,
             auth: true,
-            roles: ['admin', 'secretario', 'director'],
+            roles: [ApiRol.admin, ApiRol.director, ApiRol.secretario],
           },
           component: () => import('@/pages/admin/catalogos/tipo-documentos.page.vue'),
         },
@@ -151,7 +155,7 @@ export const adminRoute: RouteRecordRaw = {
             // elSvgIcon: '',
             hidden: false,
             auth: true,
-            roles: ['admin', 'secretario', 'director'],
+            roles: [ApiRol.admin, ApiRol.director, ApiRol.secretario],
           },
           component: () => import('@/pages/admin/catalogos/campos.page.vue'),
         },
@@ -164,7 +168,7 @@ export const adminRoute: RouteRecordRaw = {
             hidden: false,
             // elSvgIcon: '',
             auth: true,
-            roles: ['admin', 'secretario', 'director'],
+            roles: [ApiRol.admin, ApiRol.director, ApiRol.secretario],
           },
           component: () => import('@/pages/admin/catalogos/list-catalogos.page.vue'),
         },

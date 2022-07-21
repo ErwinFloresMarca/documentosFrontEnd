@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import { Area } from '../api/types/area';
 import useAuthApi from '@/api/modules/auth';
 import useUserApi from '@/api/modules/user';
 import router from '@/router';
@@ -8,6 +9,7 @@ import { ApiRol } from '@/types';
 interface Auth {
   user?: Usuario;
   token?: string;
+  area?: Area;
   isLoggedIn: boolean;
 }
 export const AUTH_STORE_KEY = 'auth_store';
@@ -18,6 +20,7 @@ const useAuth = defineStore({
     return {
       user: undefined,
       token: undefined,
+      area: undefined,
       isLoggedIn: false,
     };
   },
@@ -42,6 +45,7 @@ const useAuth = defineStore({
           this.user = resp.data.usuario;
           this.token = resp.data.token;
           this.isLoggedIn = true;
+          if (this.isTecnico()) this.loadArea();
           return true;
         })
         .catch(() => {
@@ -60,6 +64,7 @@ const useAuth = defineStore({
             const userInfo: Usuario = { ...this.user };
             Object.assign(userInfo, resp.data);
             this.user = userInfo;
+            if (this.isTecnico()) this.loadArea();
           }
           this.isLoggedIn = true;
           return true;
@@ -68,6 +73,9 @@ const useAuth = defineStore({
           return false;
         });
       return isLogin;
+    },
+    loadArea() {
+      if (this.user?.responsables?.length) this.area = this.user?.responsables[0].area;
     },
     logout() {
       this.user = undefined;
@@ -83,6 +91,10 @@ const useAuth = defineStore({
         cantUsers = data.count;
       });
       return cantUsers;
+    },
+    rolIn(roles?: ApiRol[]) {
+      if (roles) return this.user ? roles.includes(this.user.rol) : false;
+      return true;
     },
   },
 });

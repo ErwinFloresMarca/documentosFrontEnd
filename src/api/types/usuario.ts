@@ -1,6 +1,9 @@
+import { ApiRol } from '../../types';
+import { Responsable } from './responsable';
+
 export interface IUsuario {
   id: number;
-  rol: string;
+  rol: ApiRol;
   estado: number;
   nombres: string;
   paterno?: string;
@@ -12,12 +15,14 @@ export interface IUsuario {
   avatar?: string;
   updatedAt: string | Date;
   createdAt: string | Date;
+
+  responsables?: Responsable[];
 }
 
 export class Usuario implements IUsuario {
   id: number;
 
-  rol: string;
+  rol: ApiRol;
 
   estado: number;
 
@@ -40,6 +45,8 @@ export class Usuario implements IUsuario {
   updatedAt: string | Date;
 
   createdAt: string | Date;
+
+  responsables?: Responsable[];
 
   constructor(object: IUsuario) {
     this.id = object.id;
@@ -55,5 +62,6 @@ export class Usuario implements IUsuario {
     this.avatar = object.avatar;
     this.updatedAt = object.updatedAt;
     this.createdAt = object.createdAt;
+    this.responsables = object.responsables;
   }
 }

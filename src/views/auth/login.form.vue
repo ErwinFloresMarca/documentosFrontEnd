@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form :model="form" :rules="rules" label-width="0px" :inline="false" size="default">
+    <el-form :model="form" :rules="rules" :loading="loading" label-width="0px" :inline="false" size="default">
       <el-form-item>
         <el-input
           v-model="form.username"
@@ -38,6 +38,10 @@ export default {
     modelValue: {
       type: Object,
       default: () => ({}),
+    },
+    loading: {
+      type: Boolean,
+      default: false,
     },
   },
   emits: ['update:modelValue', 'on-submit'],

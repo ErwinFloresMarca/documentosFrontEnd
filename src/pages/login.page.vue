@@ -9,7 +9,7 @@
             <BtnDarkMode />
           </div>
         </div>
-        <login-form v-model="form" @on-submit="onSubmit" />
+        <login-form v-model="form" :loading="loading" @on-submit="onSubmit" />
         <el-button v-if="cantUsers === 0" class="w-full" type="success" @click="$router.push({ name: 'SignUp' })"
           >REGIATRAR USUARIO</el-button
         >
@@ -27,6 +27,7 @@ const form = reactive({ username: '', password: '' });
 const auth = useAuth();
 const router = useRouter();
 const cantUsers = ref(1);
+const loading = ref(false);
 const updateCantUsers = async () => {
   cantUsers.value = await auth.getCantUsers();
 };
@@ -34,12 +35,23 @@ const updateCantUsers = async () => {
 updateCantUsers();
 
 const onSubmit = async (username: string, password: string) => {
+  loading.value = true;
   const successLogin = await auth.login(username, password);
   if (successLogin) {
-    setTimeout(() => router.push('/admin'), 1000);
+    loading.value = false;
+    ElMessage({
+      type: 'success',
+      message: 'Session iniciada exitosamente',
+      duration: 4000,
+    });
+    setTimeout(() => router.push('/admin'), 500);
   } else {
     // error login
-    console.log('error login!!!');
+    ElMessage({
+      type: 'error',
+      message: 'Error al iniciar sesión revise su usuario y contraseña',
+      duration: 5000,
+    });
   }
 };
 </script>

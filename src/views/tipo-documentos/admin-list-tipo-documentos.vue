@@ -30,7 +30,9 @@ const props = defineProps({
 
 const emit = defineEmits(['on-select-one']);
 
-const { lista, paginate, include, getLista } = useResourceComposable<TipoDocumento>('tipo-documentos');
+const { lista, paginate, include, getLista } = useResourceComposable<TipoDocumento>(
+  `areas/${props.area.id}/tipo-documentos`,
+);
 include.value = undefined;
 paginate.value = false;
 getLista();

@@ -127,6 +127,11 @@ async function createEventDocument(tipoEvento: ITipoEvento) {
         ejecutor: auth.user,
       })
       .then(() => {
+        ElMessage({
+          type: 'success',
+          message: 'Estado del documento actualizado.',
+          duration: 3000,
+        });
         initComponent();
       })
       .catch(() => {
@@ -187,7 +192,20 @@ const campos = computed<Campo[]>({
   set: (val) => val,
 });
 const onCompletDocument = () => {
-  createEventDocument(DocumentoEventoTipos.culminado);
+  ElMessageBox.confirm('Está seguro de marcar como completado este documento?', 'Advertencia!', {
+    confirmButtonText: 'Aceptar',
+    cancelButtonText: 'Cancelar',
+    type: 'warning',
+  })
+    .then(() => {
+      createEventDocument(DocumentoEventoTipos.culminado);
+    })
+    .catch(() => {
+      ElMessage({
+        type: 'info',
+        message: 'Cancelado',
+      });
+    });
 };
 </script>
 
