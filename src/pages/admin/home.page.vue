@@ -47,9 +47,13 @@
             <el-col class="mb-2" :span="12" :sm="6" :offset="0">
               <ShowUser :usuario="auth.user" />
             </el-col>
-            <el-col class="mb-2" :span="24" :sm="12" :offset="0">
+            <el-col class="mb-2" :span="12" :sm="6" :offset="0">
               <CardTipoDocumento :tipo-documento="tipoDocumento" :area="area" />
             </el-col>
+            <el-col class="mb-2" :span="12" :sm="6" :offset="0"
+              ><div class="flex flex-wrap justify-end align-end">
+                <DocReport :area-id="area.id" :tipo-documentos-id="tipoDocumento.id" /></div
+            ></el-col>
             <el-col class="mb-2" :span="24" :offset="0">
               <DocumentosTable :area="area" :tipo-documento="tipoDocumento" />
             </el-col>
@@ -75,6 +79,7 @@ import CardArea from '@/views/areas/components/card-area.vue';
 import useAuth from '@/store/auth';
 import CardTipoDocumento from '@/views/tipo-documentos/components/card-tipo-documento.vue';
 import DocumentosTable from '@/views/documentos/documentos-table.vue';
+import DocReport from '@/views/documentos/doc-report.vue';
 
 const area = ref<Area | undefined>(undefined);
 const tipoDocumento = ref<TipoDocumento | undefined>(undefined);
