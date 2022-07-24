@@ -235,7 +235,7 @@ export default {
     getLista();
     // from areas
     const showDrawer = ref(false);
-    const selected = ref<ComodinObject | undefined>(undefined);
+    const selected = ref<Area | undefined>(undefined);
     const errors = ref<object>({});
     const formRef = ref<ComodinObject | undefined>(undefined);
     const onNew = () => {
@@ -290,7 +290,7 @@ export default {
           .catch((err) => err);
       }
     };
-    const onEdit = (area: object) => {
+    const onEdit = (area: Area) => {
       selected.value = area;
       showDrawer.value = true;
     };

@@ -19,13 +19,14 @@
 import { ArrowLeftBold } from '@element-plus/icons-vue';
 import NuevoFormVue from '@/views/documentos/nuevo.form.vue';
 import AsignarAreas from '@/views/documentos/asignar-areas.vue';
+import { Documento } from '@/api/types';
 // import PhFloppyDisk from '~icons/ph/floppy-disk';
 // import PhBuildings from '~icons/ph/buildings';
 const router = useRouter();
 
 // const activeStep = ref(0);
 const documento = ref();
-const onSuccessSave = (data) => {
+const onSuccessSave = (data: Partial<Documento>) => {
   documento.value = data;
 };
 

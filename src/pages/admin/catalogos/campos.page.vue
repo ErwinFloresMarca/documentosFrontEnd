@@ -201,7 +201,6 @@
 import { Plus, Edit, Delete, RefreshRight } from '@element-plus/icons-vue';
 import useResourceComposable from '@/composables/resource.composable';
 import { ComodinObject } from '@/types';
-import { TipoDocumento } from '@/api/types';
 import CampoForm from '@/views/campos/campo.form.vue';
 import tiposDeCampos from '@/utils/camposType';
 
@@ -322,7 +321,7 @@ export default {
         });
     };
     const getTypeLabel = (key: string) => {
-      return tiposDeCampos?.find((tc: TipoDocumento) => tc.key === key)?.label;
+      return tiposDeCampos?.find((tc: { label: string; key: string }) => tc.key === key)?.label;
     };
     return {
       onSorter,

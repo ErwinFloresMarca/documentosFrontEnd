@@ -159,6 +159,7 @@ import TipoDocumentoForm from '@/views/tipo-documentos/tipo-documento.form.vue';
 import { ComodinObject } from '@/types';
 import PhTextbox from '~icons/ph/textbox';
 import TipoDocumentoCampoDialog from '@/views/tipo-documentos/tipo-documento-campo.dialog.vue';
+import { TipoDocumento } from '@/api/types';
 
 export default {
   name: 'TipoDocumentosPage',
@@ -185,7 +186,7 @@ export default {
     getLista();
     // from tipo de documentos
     const showDrawer = ref(false);
-    const selected = ref<ComodinObject | undefined>(undefined);
+    const selected = ref<TipoDocumento | undefined>(undefined);
     const errors = ref<object>({});
     const formRef = ref<ComodinObject | undefined>(undefined);
     const onNew = () => {
@@ -240,7 +241,7 @@ export default {
           .catch((err) => err);
       }
     };
-    const onEdit = (tipoDocumento: object) => {
+    const onEdit = (tipoDocumento: TipoDocumento) => {
       selected.value = tipoDocumento;
       showDrawer.value = true;
     };

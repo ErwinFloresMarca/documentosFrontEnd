@@ -6,7 +6,6 @@ import presets from './presets/presets';
 export default defineConfig((env) => {
   // env 环境变量
   const viteEnv = loadEnv(env.mode, `.env.${env.mode}`);
-  console.log('env mode: ==========>', env.mode);
   return {
     base: viteEnv.VITE_BASE,
     // 插件

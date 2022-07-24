@@ -87,7 +87,7 @@ import useResourceApi from '@/api/resource';
 
 const emit = defineEmits(['success', 'cancel']);
 const fileApi = useFileApi();
-const formDocumento = ref(undefined);
+const formDocumento = ref<typeof DocumentoCamposForm | undefined>(undefined);
 const dataDocumento = ref<Partial<Documento>>({});
 const file = ref<IFile | undefined>(undefined);
 const base64File = ref<string | undefined>(undefined);
@@ -103,7 +103,7 @@ const handleExceed = () => {
 const handleFileSuccess = async (resp: { files: IFile[] }) => {
   file.value = { ...resp.files[0] };
   dataDocumento.value.fileId = resp.files[0].id;
-  const respBs64: unknown = await fileApi.getBase64ById(file.value.id);
+  const respBs64: { data: { base64: string } } = await fileApi.getBase64ById(file.value.id);
   base64File.value = `data:${file.value.mimeType};base64,${respBs64.data.base64}`;
 };
 const handleRemove = () => {
